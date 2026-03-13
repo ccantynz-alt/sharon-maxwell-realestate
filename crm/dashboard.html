@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxwell CRM — Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="crm.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="../index.html" class="sidebar-logo">
+                <span class="logo-icon">M</span>
+                <span class="logo-label">Maxwell CRM</span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-view="dashboard">
+                <span class="nav-icon">◻</span> Dashboard
+            </a>
+            <a href="#" class="nav-item" data-view="contacts">
+                <span class="nav-icon">◉</span> Contacts
+            </a>
+            <a href="#" class="nav-item" data-view="pipeline">
+                <span class="nav-icon">▸</span> Pipeline
+            </a>
+            <a href="#" class="nav-item" data-view="properties">
+                <span class="nav-icon">⌂</span> Properties
+            </a>
+            <a href="#" class="nav-item" data-view="activities">
+                <span class="nav-icon">◷</span> Activities
+            </a>
+            <a href="#" class="nav-item" data-view="analytics">
+                <span class="nav-icon">◫</span> Analytics
+            </a>
+            <a href="#" class="nav-item" data-view="settings">
+                <span class="nav-icon">⚙</span> Settings
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="../index.html" class="sidebar-back">← Back to Website</a>
+        </div>
+    </aside>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+        <button class="mobile-toggle" id="sidebarToggle">☰</button>
+        <span class="mobile-title">Maxwell CRM</span>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- ====== DASHBOARD VIEW ====== -->
+        <div class="view active" id="view-dashboard">
+            <div class="view-header">
+                <h1>Dashboard</h1>
+                <p class="view-date" id="currentDate"></p>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span class="stat-value" id="statContacts">0</span>
+                    <span class="stat-name">Total Contacts</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="statActive">0</span>
+                    <span class="stat-name">Active Leads</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="statWon">0</span>
+                    <span class="stat-name">Deals Won</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-value" id="statValue">$0</span>
+                    <span class="stat-name">Pipeline Value</span>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Recent Contacts</h3>
+                        <button class="btn-text" onclick="CRM.switchView('contacts')">View All →</button>
+                    </div>
+                    <div class="card-body" id="recentContacts">
+                        <p class="empty-state">No contacts yet. Add your first contact or load demo data in Settings.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Pipeline Overview</h3>
+                        <button class="btn-text" onclick="CRM.switchView('pipeline')">View Pipeline →</button>
+                    </div>
+                    <div class="card-body" id="pipelineOverview">
+                        <p class="empty-state">No pipeline data yet.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Activity</h3>
+                    <button class="btn-text" onclick="CRM.switchView('activities')">View All →</button>
+                </div>
+                <div class="card-body" id="recentActivity">
+                    <p class="empty-state">No activities recorded yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== CONTACTS VIEW ====== -->
+        <div class="view" id="view-contacts">
+            <div class="view-header">
+                <h1>Contacts</h1>
+                <button class="btn btn-primary" onclick="CRM.openContactModal()">+ Add Contact</button>
+            </div>
+
+            <div class="toolbar">
+                <input type="text" class="search-input" id="contactSearch" placeholder="Search contacts..." oninput="CRM.filterContacts()">
+                <select id="stageFilter" onchange="CRM.filterContacts()">
+                    <option value="">All Stages</option>
+                    <option value="lead">Lead</option>
+                    <option value="contacted">Contacted</option>
+                    <option value="viewing">Viewing</option>
+                    <option value="negotiation">Negotiation</option>
+                    <option value="closed_won">Closed Won</option>
+                    <option value="closed_lost">Closed Lost</option>
+                </select>
+                <select id="statusFilter" onchange="CRM.filterContacts()">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="data-table" id="contactsTable">
+                    <thead>
+                        <tr>
+                            <th onclick="CRM.sortContacts('name')">Name ↕</th>
+                            <th onclick="CRM.sortContacts('email')">Email ↕</th>
+                            <th onclick="CRM.sortContacts('phone')">Phone</th>
+                            <th onclick="CRM.sortContacts('stage')">Stage ↕</th>
+                            <th onclick="CRM.sortContacts('source')">Source ↕</th>
+                            <th onclick="CRM.sortContacts('updatedAt')">Updated ↕</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contactsBody"></tbody>
+                </table>
+                <p class="empty-state" id="contactsEmpty" style="display:none;">No contacts found. Add one above or load demo data in Settings.</p>
+            </div>
+        </div>
+
+        <!-- ====== PIPELINE VIEW ====== -->
+        <div class="view" id="view-pipeline">
+            <div class="view-header">
+                <h1>Sales Pipeline</h1>
+                <span class="pipeline-total" id="pipelineTotal">$0 total value</span>
+            </div>
+            <div class="pipeline-board" id="pipelineBoard"></div>
+        </div>
+
+        <!-- ====== PROPERTIES VIEW ====== -->
+        <div class="view" id="view-properties">
+            <div class="view-header">
+                <h1>Properties</h1>
+                <button class="btn btn-primary" onclick="CRM.openPropertyModal()">+ Add Property</button>
+            </div>
+            <div class="property-crm-grid" id="propertiesGrid">
+                <p class="empty-state">No properties added yet.</p>
+            </div>
+        </div>
+
+        <!-- ====== ACTIVITIES VIEW ====== -->
+        <div class="view" id="view-activities">
+            <div class="view-header">
+                <h1>Activity Timeline</h1>
+                <button class="btn btn-primary" onclick="CRM.openActivityModal()">+ Log Activity</button>
+            </div>
+            <div class="timeline" id="activityTimeline">
+                <p class="empty-state">No activities recorded yet.</p>
+            </div>
+        </div>
+
+        <!-- ====== ANALYTICS VIEW ====== -->
+        <div class="view" id="view-analytics">
+            <div class="view-header">
+                <h1>Analytics</h1>
+            </div>
+            <div class="analytics-grid">
+                <div class="card">
+                    <div class="card-header"><h3>Contacts by Stage</h3></div>
+                    <div class="card-body chart-container" id="chartStages"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Lead Sources</h3></div>
+                    <div class="card-body chart-container" id="chartSources"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Monthly Activity</h3></div>
+                    <div class="card-body chart-container" id="chartMonthly"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Conversion Metrics</h3></div>
+                    <div class="card-body" id="conversionMetrics"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== SETTINGS VIEW ====== -->
+        <div class="view" id="view-settings">
+            <div class="view-header">
+                <h1>Settings</h1>
+            </div>
+            <div class="settings-grid">
+                <div class="card">
+                    <div class="card-header"><h3>Demo Data</h3></div>
+                    <div class="card-body">
+                        <p>Load sample contacts and properties to test the CRM.</p>
+                        <button class="btn btn-primary" style="margin-top: 12px;" onclick="CRM.loadDemoData()">Load Demo Data</button>
+                        <button class="btn btn-danger" style="margin-top: 12px;" onclick="CRM.clearAllData()">Clear All Data</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Import / Export</h3></div>
+                    <div class="card-body">
+                        <div class="import-export-btns">
+                            <button class="btn btn-secondary" onclick="CRM.exportCSV()">Export CSV</button>
+                            <button class="btn btn-secondary" onclick="CRM.exportJSON()">Export JSON Backup</button>
+                            <label class="btn btn-secondary" style="cursor:pointer;">
+                                Import CSV
+                                <input type="file" accept=".csv" style="display:none;" onchange="CRM.importCSV(event)">
+                            </label>
+                            <label class="btn btn-secondary" style="cursor:pointer;">
+                                Import JSON
+                                <input type="file" accept=".json" style="display:none;" onchange="CRM.importJSON(event)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3>Pipeline Stages</h3></div>
+                    <div class="card-body">
+                        <div class="stages-list">
+                            <div class="stage-item"><span class="stage-badge lead">Lead</span> — New enquiry or referral</div>
+                            <div class="stage-item"><span class="stage-badge contacted">Contacted</span> — Initial contact made</div>
+                            <div class="stage-item"><span class="stage-badge viewing">Viewing</span> — Property viewing scheduled/done</div>
+                            <div class="stage-item"><span class="stage-badge negotiation">Negotiation</span> — Offer or negotiation in progress</div>
+                            <div class="stage-item"><span class="stage-badge closed_won">Closed Won</span> — Deal completed</div>
+                            <div class="stage-item"><span class="stage-badge closed_lost">Closed Lost</span> — Deal did not proceed</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ====== MODALS ====== -->
+    <div class="modal-overlay" id="modalOverlay" onclick="CRM.closeModal()"></div>
+
+    <!-- Contact Modal -->
+    <div class="modal" id="contactModal">
+        <div class="modal-header">
+            <h2 id="contactModalTitle">Add Contact</h2>
+            <button class="modal-close" onclick="CRM.closeModal()">×</button>
+        </div>
+        <form id="contactModalForm" onsubmit="CRM.saveContact(event)">
+            <input type="hidden" id="contactId">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" id="cmFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" id="cmLastName" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="cmEmail">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="cmPhone">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Stage</label>
+                    <select id="cmStage">
+                        <option value="lead">Lead</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="viewing">Viewing</option>
+                        <option value="negotiation">Negotiation</option>
+                        <option value="closed_won">Closed Won</option>
+                        <option value="closed_lost">Closed Lost</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Source</label>
+                    <select id="cmSource">
+                        <option value="website">Website</option>
+                        <option value="referral">Referral</option>
+                        <option value="open_home">Open Home</option>
+                        <option value="phone">Phone</option>
+                        <option value="social">Social Media</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Deal Value ($)</label>
+                <input type="number" id="cmDealValue" placeholder="e.g. 1500000">
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="cmNotes" rows="3"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="CRM.closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Contact</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Property Modal -->
+    <div class="modal" id="propertyModal">
+        <div class="modal-header">
+            <h2 id="propertyModalTitle">Add Property</h2>
+            <button class="modal-close" onclick="CRM.closeModal()">×</button>
+        </div>
+        <form id="propertyModalForm" onsubmit="CRM.saveProperty(event)">
+            <input type="hidden" id="propertyId">
+            <div class="form-group">
+                <label>Address *</label>
+                <input type="text" id="pmAddress" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="pmCategory">
+                        <option value="residential">Residential</option>
+                        <option value="waterfront">Waterfront</option>
+                        <option value="lifestyle">Lifestyle</option>
+                        <option value="rural">Rural Estate</option>
+                        <option value="urban">Urban Luxury</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="pmStatus">
+                        <option value="available">Available</option>
+                        <option value="under_offer">Under Offer</option>
+                        <option value="sold">Sold</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Price ($)</label>
+                    <input type="number" id="pmPrice">
+                </div>
+                <div class="form-group">
+                    <label>Bedrooms</label>
+                    <input type="number" id="pmBeds">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Bathrooms</label>
+                    <input type="number" id="pmBaths">
+                </div>
+                <div class="form-group">
+                    <label>Area (m²)</label>
+                    <input type="number" id="pmArea">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="pmDescription" rows="3"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="CRM.closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Property</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Activity Modal -->
+    <div class="modal" id="activityModal">
+        <div class="modal-header">
+            <h2>Log Activity</h2>
+            <button class="modal-close" onclick="CRM.closeModal()">×</button>
+        </div>
+        <form id="activityModalForm" onsubmit="CRM.saveActivity(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="amType">
+                        <option value="call">Call</option>
+                        <option value="email">Email</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="viewing">Viewing</option>
+                        <option value="offer">Offer</option>
+                        <option value="note">Note</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Contact</label>
+                    <select id="amContact"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description *</label>
+                <textarea id="amDescription" rows="3" required></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="CRM.closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Activity</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="crm.js"></script>
+</body>
+</html>
