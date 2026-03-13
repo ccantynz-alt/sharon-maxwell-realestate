@@ -251,14 +251,14 @@ ul { list-style: none; }
 .hero {
     position: relative;
     overflow: hidden;
-    background: var(--gray-50);
+    background: var(--charcoal);
 }
 
 .hero-slider {
     position: relative;
-    height: 80vh;
-    min-height: 500px;
-    max-height: 800px;
+    height: 85vh;
+    min-height: 550px;
+    max-height: 900px;
 }
 
 .hero-slide {
@@ -266,20 +266,17 @@ ul { list-style: none; }
     inset: 0;
     opacity: 0;
     transition: opacity 0.8s ease;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero-slide.active { opacity: 1; z-index: 1; }
 
-.hero-slide-bg {
+.hero-slide-overlay {
     position: absolute;
     inset: 0;
-}
-
-.hero-slide-bg svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
+    background: linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
 }
 
 .hero-slide-content {
@@ -505,14 +502,15 @@ ul { list-style: none; }
     aspect-ratio: 3/2;
 }
 
-.listing-image svg {
+.listing-image img {
     width: 100%;
     height: 100%;
     display: block;
+    object-fit: cover;
     transition: transform 0.6s ease;
 }
 
-.listing-card:hover .listing-image svg {
+.listing-card:hover .listing-image img {
     transform: scale(1.05);
 }
 
@@ -639,10 +637,11 @@ ul { list-style: none; }
     overflow: hidden;
 }
 
-.sold-image svg {
+.sold-image img {
     width: 100%;
     height: 100%;
     display: block;
+    object-fit: cover;
 }
 
 .sold-banner {
@@ -689,9 +688,12 @@ ul { list-style: none; }
     align-items: center;
 }
 
-.about-image svg {
+.about-image img {
+    width: 100%;
     border-radius: 8px;
     box-shadow: var(--shadow-lg);
+    object-fit: cover;
+    aspect-ratio: 5/6;
 }
 
 .about-lead {
@@ -748,15 +750,28 @@ ul { list-style: none; }
    APPRAISAL CTA
    ============================================ */
 .appraisal-cta {
-    background: var(--charcoal);
-    padding: 80px 0;
+    position: relative;
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.appraisal-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.appraisal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 30, 30, 0.85);
 }
 
 .appraisal-inner {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 60px;
-    align-items: center;
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
 }
 
 .appraisal-content h2 {
