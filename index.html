@@ -3,29 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharon & Kirk Maxwell — Luxury Real Estate</title>
+    <title>Sharon Maxwell & Kirk — Ray White Real Estate</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <span class="logo-icon">M</span>
-                <div class="logo-text">
-                    <span class="logo-name">Maxwell</span>
-                    <span class="logo-tagline">Luxury Real Estate</span>
+
+    <!-- ====== TOP BAR ====== -->
+    <div class="top-bar">
+        <div class="container top-bar-inner">
+            <div class="top-bar-left">
+                <a href="#" class="rw-logo">
+                    <div class="rw-logo-yellow">
+                        <span class="rw-logo-text">Ray</span>
+                        <span class="rw-logo-text">White.</span>
+                    </div>
+                </a>
+            </div>
+            <div class="top-bar-center">
+                <div class="search-bar">
+                    <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="2" fill="none"/><line x1="13" y1="13" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <input type="text" placeholder="Search properties, suburbs..." id="searchInput">
                 </div>
-            </a>
+            </div>
+            <div class="top-bar-right">
+                <a href="#appraisal" class="btn btn-yellow">What's My Home Worth?</a>
+                <a href="#contact" class="btn btn-outline-light">Get In Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== NAVIGATION ====== -->
+    <nav class="nav" id="nav">
+        <div class="container nav-inner">
             <ul class="nav-links" id="navLinks">
-                <li><a href="#properties">Properties</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
-                <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+                <li><a href="#" class="nav-link active">Home</a></li>
+                <li><a href="#listings" class="nav-link">For Sale</a></li>
+                <li><a href="#sold" class="nav-link">Sold</a></li>
+                <li class="has-dropdown">
+                    <a href="#about" class="nav-link">Why Choose Sharon <svg viewBox="0 0 10 6" width="10" height="6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
+                </li>
+                <li><a href="#testimonials" class="nav-link">Customer Care</a></li>
+                <li><a href="#contact" class="nav-link">Get In Touch</a></li>
             </ul>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
                 <span></span><span></span><span></span>
@@ -33,507 +54,603 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg">
-            <svg class="hero-svg" viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#0a1628"/>
-                        <stop offset="60%" stop-color="#132240"/>
-                        <stop offset="100%" stop-color="#1a3058"/>
-                    </linearGradient>
-                    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#c8a45e"/>
-                        <stop offset="50%" stop-color="#e8d48b"/>
-                        <stop offset="100%" stop-color="#c8a45e"/>
-                    </linearGradient>
-                    <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#1a3058" stop-opacity="0.6"/>
-                        <stop offset="100%" stop-color="#0a1628" stop-opacity="0.9"/>
-                    </linearGradient>
-                </defs>
-                <rect width="1440" height="800" fill="url(#skyGrad)"/>
-                <!-- Stars -->
-                <circle cx="200" cy="80" r="1.5" fill="#fff" opacity="0.6"/>
-                <circle cx="400" cy="120" r="1" fill="#fff" opacity="0.4"/>
-                <circle cx="650" cy="60" r="1.5" fill="#fff" opacity="0.5"/>
-                <circle cx="900" cy="100" r="1" fill="#fff" opacity="0.3"/>
-                <circle cx="1100" cy="70" r="1.5" fill="#fff" opacity="0.6"/>
-                <circle cx="1300" cy="130" r="1" fill="#fff" opacity="0.4"/>
-                <circle cx="300" cy="180" r="1" fill="#fff" opacity="0.3"/>
-                <circle cx="800" cy="150" r="1.5" fill="#fff" opacity="0.5"/>
-                <!-- Moon -->
-                <circle cx="1200" cy="150" r="40" fill="#e8d48b" opacity="0.15"/>
-                <circle cx="1210" cy="145" r="35" fill="url(#skyGrad)" opacity="0.8"/>
-                <!-- Luxury house silhouette -->
-                <rect x="300" y="380" width="840" height="220" fill="#0d1a2d" rx="2"/>
-                <rect x="340" y="320" width="760" height="60" fill="#0f1e35"/>
-                <polygon points="280,380 720,260 1160,380" fill="#0f1e35"/>
-                <!-- Windows with warm glow -->
-                <rect x="380" y="420" width="80" height="100" rx="2" fill="#c8a45e" opacity="0.3"/>
-                <rect x="500" y="420" width="80" height="100" rx="2" fill="#c8a45e" opacity="0.25"/>
-                <rect x="860" y="420" width="80" height="100" rx="2" fill="#c8a45e" opacity="0.3"/>
-                <rect x="980" y="420" width="80" height="100" rx="2" fill="#c8a45e" opacity="0.25"/>
-                <!-- Grand entrance -->
-                <rect x="660" y="430" width="120" height="170" rx="60 60 0 0" fill="#c8a45e" opacity="0.2"/>
-                <!-- Columns -->
-                <rect x="640" y="400" width="8" height="200" fill="#c8a45e" opacity="0.15"/>
-                <rect x="792" y="400" width="8" height="200" fill="#c8a45e" opacity="0.15"/>
-                <!-- Reflection/water -->
-                <rect x="0" y="600" width="1440" height="200" fill="url(#waterGrad)"/>
-                <rect x="300" y="600" width="840" height="120" fill="#c8a45e" opacity="0.03"/>
-                <!-- Ground line -->
-                <line x1="0" y1="600" x2="1440" y2="600" stroke="#c8a45e" stroke-width="0.5" opacity="0.3"/>
-                <!-- Landscaping dots -->
-                <circle cx="250" cy="590" r="30" fill="#0d1a2d"/>
-                <circle cx="220" cy="585" r="25" fill="#0f1e35"/>
-                <circle cx="1200" cy="590" r="30" fill="#0d1a2d"/>
-                <circle cx="1230" cy="585" r="25" fill="#0f1e35"/>
-            </svg>
-        </div>
-        <div class="hero-content">
-            <p class="hero-subtitle animate-fade-up">Sharon & Kirk Maxwell</p>
-            <h1 class="hero-title animate-fade-up delay-1">Exceptional Properties.<br>Extraordinary Results.</h1>
-            <p class="hero-description animate-fade-up delay-2">New Zealand's premier luxury real estate team, delivering unmatched expertise across Auckland's most prestigious neighbourhoods for over 25 years.</p>
-            <div class="hero-stats animate-fade-up delay-3">
-                <div class="stat">
-                    <span class="stat-number" data-target="350">0</span><span class="stat-suffix">+</span>
-                    <span class="stat-label">Properties Sold</span>
+    <!-- ====== HERO SECTION ====== -->
+    <section class="hero" id="hero">
+        <div class="hero-slider" id="heroSlider">
+            <!-- Slide 1 — Sharon & Kirk on beach -->
+            <div class="hero-slide active">
+                <div class="hero-slide-bg">
+                    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#5bacdf"/>
+                                <stop offset="100%" stop-color="#c9e6f5"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="1600" height="900" fill="url(#sky1)"/>
+                        <!-- Water -->
+                        <rect x="0" y="420" width="1600" height="200" fill="#3a99c9" opacity="0.5"/>
+                        <rect x="0" y="440" width="1600" height="180" fill="#2e88b8" opacity="0.3"/>
+                        <!-- Distant hills -->
+                        <ellipse cx="400" cy="420" rx="500" ry="60" fill="#7baa6d" opacity="0.4"/>
+                        <ellipse cx="1200" cy="410" rx="400" ry="50" fill="#6d9960" opacity="0.35"/>
+                        <!-- Beach -->
+                        <ellipse cx="800" cy="750" rx="1200" ry="300" fill="#e8dcc0"/>
+                        <ellipse cx="800" cy="720" rx="1100" ry="250" fill="#f0e6d0"/>
+                        <!-- Cliff/rocks right -->
+                        <polygon points="1300,350 1600,300 1600,650 1350,700 1250,600" fill="#b8a080" opacity="0.5"/>
+                        <ellipse cx="1400" cy="340" rx="120" ry="80" fill="#4a8040" opacity="0.6"/>
+                        <ellipse cx="1350" cy="360" rx="80" ry="50" fill="#3d7035" opacity="0.5"/>
+                        <!-- Kirk (left figure) -->
+                        <ellipse cx="620" cy="430" rx="40" ry="48" fill="#e8c9a0"/>
+                        <rect x="585" y="340" width="70" height="50" rx="6" fill="#8b6840"/>
+                        <rect x="580" y="478" width="80" height="180" rx="4" fill="#f5f5f5"/>
+                        <rect x="580" y="658" width="35" height="100" fill="#4a4a4a"/>
+                        <rect x="625" y="658" width="35" height="100" fill="#4a4a4a"/>
+                        <!-- Sharon (right figure) -->
+                        <ellipse cx="760" cy="440" rx="38" ry="45" fill="#f0d5b0"/>
+                        <ellipse cx="760" cy="380" rx="50" ry="50" fill="#c8a860"/>
+                        <rect x="722" y="485" width="76" height="170" rx="4" fill="#8b6840"/>
+                        <rect x="722" y="655" width="32" height="95" fill="#4a4a4a"/>
+                        <rect x="766" y="655" width="32" height="95" fill="#4a4a4a"/>
+                        <!-- Water shimmer -->
+                        <rect x="200" y="480" width="80" height="2" fill="#fff" opacity="0.3" rx="1"/>
+                        <rect x="500" y="500" width="120" height="2" fill="#fff" opacity="0.25" rx="1"/>
+                        <rect x="900" y="470" width="100" height="2" fill="#fff" opacity="0.3" rx="1"/>
+                    </svg>
                 </div>
-                <div class="stat">
-                    <span class="stat-prefix">$</span><span class="stat-number" data-target="520">0</span><span class="stat-suffix">M+</span>
-                    <span class="stat-label">Total Volume</span>
+                <div class="hero-slide-content">
+                    <div class="hero-accent-line"></div>
+                    <h1>Sharon Maxwell &amp;<br>husband Kirk have an<br>outstanding track<br>record for consistent<br>exceptional sales<br>results in any market<br>conditions</h1>
+                    <a href="#contact" class="btn btn-yellow btn-lg">Let's Talk</a>
                 </div>
-                <div class="stat">
-                    <span class="stat-number" data-target="25">0</span><span class="stat-suffix">+</span>
-                    <span class="stat-label">Years Experience</span>
+                <div class="hero-social">
+                    <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg></a>
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+                    <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.93 29 29 0 00.46-5.33 29 29 0 00-.46-5.42z"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="#fff"/></svg></a>
                 </div>
             </div>
-            <div class="hero-ctas animate-fade-up delay-4">
-                <a href="#properties" class="btn btn-primary">View Properties</a>
-                <a href="#contact" class="btn btn-secondary">Book Appraisal</a>
+
+            <!-- Slide 2 — Luxury waterfront -->
+            <div class="hero-slide">
+                <div class="hero-slide-bg">
+                    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                        <defs>
+                            <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#89CFF0"/>
+                                <stop offset="100%" stop-color="#d4eef9"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="1600" height="900" fill="url(#sky2)"/>
+                        <circle cx="1400" cy="120" r="60" fill="#FFE066" opacity="0.5"/>
+                        <!-- Water -->
+                        <rect x="0" y="550" width="1600" height="350" fill="#4aa8d4" opacity="0.35"/>
+                        <!-- Luxury house -->
+                        <rect x="200" y="280" width="1000" height="300" fill="#f8f4ef" rx="2"/>
+                        <rect x="200" y="250" width="1000" height="30" fill="#e8e0d4"/>
+                        <polygon points="180,280 700,150 1220,280" fill="#5a4a38"/>
+                        <!-- Windows -->
+                        <rect x="280" y="320" width="120" height="120" rx="2" fill="#a8d4e8" opacity="0.6"/>
+                        <rect x="440" y="320" width="120" height="120" rx="2" fill="#a8d4e8" opacity="0.55"/>
+                        <rect x="840" y="320" width="120" height="120" rx="2" fill="#a8d4e8" opacity="0.6"/>
+                        <rect x="1000" y="320" width="120" height="120" rx="2" fill="#a8d4e8" opacity="0.55"/>
+                        <!-- Grand entrance -->
+                        <rect x="620" y="350" width="160" height="230" rx="80 80 0 0" fill="#8a7050" opacity="0.5"/>
+                        <!-- Columns -->
+                        <rect x="600" y="300" width="10" height="280" fill="#d4c8b4"/>
+                        <rect x="790" y="300" width="10" height="280" fill="#d4c8b4"/>
+                        <!-- Lawn -->
+                        <rect x="0" y="580" width="1600" height="100" fill="#6db85a" opacity="0.4"/>
+                        <!-- Pool -->
+                        <rect x="300" y="630" width="200" height="100" rx="8" fill="#7cc8e8" opacity="0.4"/>
+                        <!-- Trees -->
+                        <ellipse cx="100" cy="500" rx="70" ry="80" fill="#4a8840" opacity="0.5"/>
+                        <ellipse cx="1450" cy="480" rx="80" ry="90" fill="#4a8840" opacity="0.45"/>
+                    </svg>
+                </div>
+                <div class="hero-slide-content">
+                    <div class="hero-accent-line"></div>
+                    <h1>Premium Properties<br>Across Auckland's<br>Most Prestigious<br>Neighbourhoods</h1>
+                    <a href="#listings" class="btn btn-yellow btn-lg">View Listings</a>
+                </div>
+            </div>
+
+            <!-- Slide 3 — Sold results -->
+            <div class="hero-slide">
+                <div class="hero-slide-bg">
+                    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+                        <rect width="1600" height="900" fill="#f0ece4"/>
+                        <!-- Modern home -->
+                        <rect x="250" y="200" width="1100" height="400" fill="#fff" rx="4"/>
+                        <rect x="250" y="180" width="1100" height="20" fill="#e0dcd4"/>
+                        <rect x="250" y="160" width="1100" height="20" fill="#d0ccc4"/>
+                        <!-- Garage -->
+                        <rect x="300" y="380" width="200" height="220" fill="#d8d0c4"/>
+                        <rect x="310" y="390" width="180" height="200" fill="#bab4a8" rx="2"/>
+                        <!-- Windows large -->
+                        <rect x="550" y="250" width="300" height="200" fill="#a8d4e8" opacity="0.5"/>
+                        <rect x="900" y="250" width="200" height="200" fill="#a8d4e8" opacity="0.45"/>
+                        <!-- Door -->
+                        <rect x="1150" y="350" width="100" height="250" fill="#8a7050"/>
+                        <!-- Garden -->
+                        <rect x="0" y="600" width="1600" height="300" fill="#7ab868" opacity="0.35"/>
+                        <ellipse cx="200" cy="560" rx="80" ry="90" fill="#508a40" opacity="0.4"/>
+                        <ellipse cx="1400" cy="550" rx="90" ry="100" fill="#508a40" opacity="0.35"/>
+                        <!-- Path -->
+                        <rect x="1160" y="600" width="80" height="200" fill="#d0c8b8" opacity="0.5"/>
+                        <!-- SOLD banner -->
+                        <rect x="100" y="100" width="240" height="80" rx="4" fill="#FED100"/>
+                        <text x="220" y="150" text-anchor="middle" font-family="Inter" font-size="32" font-weight="800" fill="#3C3C3C">SOLD</text>
+                    </svg>
+                </div>
+                <div class="hero-slide-content">
+                    <div class="hero-accent-line"></div>
+                    <h1>Consistently Achieving<br>Record Prices<br>For Our Vendors</h1>
+                    <a href="#sold" class="btn btn-yellow btn-lg">View Sold Properties</a>
+                </div>
             </div>
         </div>
-        <div class="hero-scroll">
-            <span>Scroll to explore</span>
-            <div class="scroll-line"></div>
+
+        <!-- Hero Controls -->
+        <div class="hero-controls">
+            <button class="hero-arrow hero-prev" id="heroPrev" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="hero-dots" id="heroDots">
+                <button class="hero-dot active" data-slide="0"></button>
+                <button class="hero-dot" data-slide="1"></button>
+                <button class="hero-dot" data-slide="2"></button>
+            </div>
+            <button class="hero-arrow hero-next" id="heroNext" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
         </div>
     </section>
 
-    <!-- Trust Bar -->
-    <section class="trust-bar">
-        <div class="trust-track">
-            <div class="trust-item"><span class="trust-icon">★</span> REAA Licensed</div>
-            <div class="trust-item"><span class="trust-icon">◆</span> Top 1% Nationwide</div>
-            <div class="trust-item"><span class="trust-icon">★</span> 5-Star Rating</div>
-            <div class="trust-item"><span class="trust-icon">◆</span> Premium Marketing</div>
-            <div class="trust-item"><span class="trust-icon">★</span> Harcourts Gold Member</div>
-            <div class="trust-item"><span class="trust-icon">◆</span> Auction Specialists</div>
-            <div class="trust-item"><span class="trust-icon">★</span> REAA Licensed</div>
-            <div class="trust-item"><span class="trust-icon">◆</span> Top 1% Nationwide</div>
-            <div class="trust-item"><span class="trust-icon">★</span> 5-Star Rating</div>
-            <div class="trust-item"><span class="trust-icon">◆</span> Premium Marketing</div>
-            <div class="trust-item"><span class="trust-icon">★</span> Harcourts Gold Member</div>
-            <div class="trust-item"><span class="trust-icon">◆</span> Auction Specialists</div>
+    <!-- ====== STATS BAR ====== -->
+    <section class="stats-bar">
+        <div class="container stats-bar-inner">
+            <div class="stat-item">
+                <span class="stat-number" data-target="350">0</span><span class="stat-suffix">+</span>
+                <span class="stat-label">Properties Sold</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-prefix">$</span><span class="stat-number" data-target="520">0</span><span class="stat-suffix">M+</span>
+                <span class="stat-label">Total Sales Volume</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="25">0</span><span class="stat-suffix">+</span>
+                <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" data-target="98">0</span><span class="stat-suffix">%</span>
+                <span class="stat-label">Client Satisfaction</span>
+            </div>
         </div>
     </section>
 
-    <!-- Properties Section -->
-    <section class="properties" id="properties">
+    <!-- ====== FOR SALE — PROPERTY CAROUSEL ====== -->
+    <section class="listings" id="listings">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Curated Collection</p>
-                <h2 class="section-title">Featured Properties</h2>
+                <div>
+                    <h2 class="section-title">Properties For Sale</h2>
+                    <p class="section-subtitle">Discover our latest premium listings across Auckland</p>
+                </div>
+                <div class="carousel-nav">
+                    <button class="carousel-arrow" id="listingsPrev" aria-label="Previous">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <button class="carousel-arrow" id="listingsNext" aria-label="Next">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
+                </div>
             </div>
-            <div class="property-filters">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="waterfront">Waterfront</button>
-                <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
-                <button class="filter-btn" data-filter="urban">Urban Luxury</button>
-                <button class="filter-btn" data-filter="rural">Rural Estate</button>
+
+            <div class="property-carousel" id="listingsCarousel">
+                <div class="property-track" id="listingsTrack">
+
+                    <!-- Listing 1 -->
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="600" height="400" fill="#e8f4fd"/>
+                                <rect x="0" y="300" width="600" height="100" fill="#2E86AB" opacity="0.25"/>
+                                <rect x="80" y="120" width="440" height="200" fill="#fff" rx="2"/>
+                                <polygon points="60,120 300,30 540,120" fill="#6a5a48"/>
+                                <rect x="250" y="200" width="100" height="120" rx="50 50 0 0" fill="#8a7050" opacity="0.6"/>
+                                <rect x="120" y="160" width="80" height="60" fill="#a8d4e8" opacity="0.5"/>
+                                <rect x="400" y="160" width="80" height="60" fill="#a8d4e8" opacity="0.5"/>
+                                <rect x="0" y="320" width="600" height="80" fill="#6db85a" opacity="0.3"/>
+                            </svg>
+                            <span class="listing-badge">For Sale</span>
+                            <button class="listing-save" aria-label="Save">♡</button>
+                        </div>
+                        <div class="listing-body">
+                            <h3 class="listing-address">42 Marine Parade, Takapuna</h3>
+                            <p class="listing-suburb">Takapuna, North Shore</p>
+                            <div class="listing-features">
+                                <span><strong>5</strong> Bed</span>
+                                <span><strong>4</strong> Bath</span>
+                                <span><strong>3</strong> Car</span>
+                                <span><strong>680</strong>m²</span>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="listing-price">By Negotiation</span>
+                                <a href="#contact" class="listing-enquire">Enquire →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 2 -->
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="600" height="400" fill="#f0ece4"/>
+                                <rect x="100" y="100" width="400" height="220" fill="#fff"/>
+                                <rect x="100" y="80" width="400" height="20" fill="#e8e0d0"/>
+                                <rect x="100" y="60" width="400" height="20" fill="#d8d0c0"/>
+                                <rect x="140" y="130" width="120" height="100" fill="#a8d4e8" opacity="0.45"/>
+                                <rect x="340" y="130" width="120" height="100" fill="#a8d4e8" opacity="0.45"/>
+                                <rect x="270" y="200" width="60" height="120" fill="#8a7050"/>
+                                <rect x="0" y="320" width="600" height="80" fill="#7ab868" opacity="0.3"/>
+                                <ellipse cx="50" cy="280" rx="50" ry="60" fill="#508a40" opacity="0.4"/>
+                                <ellipse cx="550" cy="270" rx="60" ry="70" fill="#508a40" opacity="0.35"/>
+                            </svg>
+                            <span class="listing-badge">For Sale</span>
+                            <button class="listing-save" aria-label="Save">♡</button>
+                        </div>
+                        <div class="listing-body">
+                            <h3 class="listing-address">18 Vineyard Lane, Waiheke Island</h3>
+                            <p class="listing-suburb">Waiheke Island</p>
+                            <div class="listing-features">
+                                <span><strong>4</strong> Bed</span>
+                                <span><strong>3</strong> Bath</span>
+                                <span><strong>2</strong> Car</span>
+                                <span><strong>2.4</strong>ha</span>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="listing-price">Auction</span>
+                                <a href="#contact" class="listing-enquire">Enquire →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 3 -->
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="600" height="400" fill="#1a2a4a"/>
+                                <rect x="100" y="60" width="150" height="280" fill="#2a3a5a"/>
+                                <rect x="280" y="40" width="200" height="300" fill="#3a4a6a"/>
+                                <rect x="350" y="340" width="150" height="60" fill="#2a3a5a"/>
+                                <rect x="300" y="70" width="50" height="40" fill="#FED100" opacity="0.35"/>
+                                <rect x="370" y="70" width="50" height="40" fill="#FED100" opacity="0.3"/>
+                                <rect x="300" y="130" width="50" height="40" fill="#FED100" opacity="0.3"/>
+                                <rect x="370" y="130" width="50" height="40" fill="#FED100" opacity="0.35"/>
+                                <rect x="120" y="100" width="40" height="35" fill="#FED100" opacity="0.3"/>
+                                <rect x="180" y="100" width="40" height="35" fill="#FED100" opacity="0.25"/>
+                                <rect x="0" y="340" width="600" height="60" fill="#0d1628"/>
+                            </svg>
+                            <span class="listing-badge">For Sale</span>
+                            <button class="listing-save" aria-label="Save">♡</button>
+                        </div>
+                        <div class="listing-body">
+                            <h3 class="listing-address">Level 32, Viaduct Tower</h3>
+                            <p class="listing-suburb">Viaduct Harbour, Auckland CBD</p>
+                            <div class="listing-features">
+                                <span><strong>3</strong> Bed</span>
+                                <span><strong>2</strong> Bath</span>
+                                <span><strong>2</strong> Car</span>
+                                <span><strong>240</strong>m²</span>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="listing-price">$4,800,000</span>
+                                <a href="#contact" class="listing-enquire">Enquire →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 4 -->
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="600" height="400" fill="#FFE4B5"/>
+                                <circle cx="500" cy="80" r="50" fill="#FFD700" opacity="0.4"/>
+                                <rect x="0" y="300" width="600" height="100" fill="#2E86AB" opacity="0.25"/>
+                                <rect x="100" y="140" width="400" height="180" fill="#fff" rx="2"/>
+                                <rect x="100" y="120" width="400" height="20" fill="#f0e8d8"/>
+                                <rect x="250" y="220" width="100" height="100" fill="#8a7050" opacity="0.5"/>
+                                <rect x="140" y="170" width="70" height="55" fill="#a8d4e8" opacity="0.45"/>
+                                <rect x="390" y="170" width="70" height="55" fill="#a8d4e8" opacity="0.45"/>
+                                <rect x="0" y="320" width="600" height="80" fill="#6db85a" opacity="0.25"/>
+                            </svg>
+                            <span class="listing-badge">For Sale</span>
+                            <button class="listing-save" aria-label="Save">♡</button>
+                        </div>
+                        <div class="listing-body">
+                            <h3 class="listing-address">8 Tamaki Drive, Mission Bay</h3>
+                            <p class="listing-suburb">Mission Bay, Auckland</p>
+                            <div class="listing-features">
+                                <span><strong>6</strong> Bed</span>
+                                <span><strong>5</strong> Bath</span>
+                                <span><strong>4</strong> Car</span>
+                                <span><strong>820</strong>m²</span>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="listing-price">$7,250,000</span>
+                                <a href="#contact" class="listing-enquire">Enquire →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 5 -->
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="600" height="400" fill="#87CEEB"/>
+                                <ellipse cx="300" cy="380" rx="400" ry="120" fill="#6db85a" opacity="0.35"/>
+                                <rect x="150" y="150" width="300" height="180" fill="#8B7355"/>
+                                <polygon points="130,150 300,60 470,150" fill="#5a4a3a"/>
+                                <rect x="260" y="220" width="80" height="110" fill="#FED100" opacity="0.4"/>
+                                <rect x="170" y="180" width="55" height="45" fill="#fff" opacity="0.4"/>
+                                <rect x="375" y="180" width="55" height="45" fill="#fff" opacity="0.4"/>
+                                <ellipse cx="70" cy="300" rx="60" ry="70" fill="#3d7035" opacity="0.5"/>
+                                <ellipse cx="530" cy="290" rx="70" ry="80" fill="#3d7035" opacity="0.45"/>
+                            </svg>
+                            <span class="listing-badge">For Sale</span>
+                            <button class="listing-save" aria-label="Save">♡</button>
+                        </div>
+                        <div class="listing-body">
+                            <h3 class="listing-address">156 Old North Road, Kumeu</h3>
+                            <p class="listing-suburb">Kumeu, West Auckland</p>
+                            <div class="listing-features">
+                                <span><strong>7</strong> Bed</span>
+                                <span><strong>5</strong> Bath</span>
+                                <span><strong>6</strong> Car</span>
+                                <span><strong>5.2</strong>ha</span>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="listing-price">Deadline Sale</span>
+                                <a href="#contact" class="listing-enquire">Enquire →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Listing 6 -->
+                    <div class="listing-card">
+                        <div class="listing-image">
+                            <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="600" height="400" fill="#E0F0FF"/>
+                                <rect x="0" y="300" width="600" height="100" fill="#6db85a" opacity="0.25"/>
+                                <rect x="80" y="130" width="220" height="190" fill="#f8f4ef"/>
+                                <rect x="320" y="150" width="200" height="170" fill="#f8f4ef"/>
+                                <rect x="300" y="130" width="20" height="190" fill="#e8e0d0"/>
+                                <polygon points="60,130 190,60 320,130" fill="#6a5a48"/>
+                                <polygon points="300,150 420,80 540,150" fill="#6a5a48"/>
+                                <rect x="155" y="230" width="70" height="90" fill="#8a7050" opacity="0.5"/>
+                                <rect x="370" y="190" width="60" height="50" fill="#a8d4e8" opacity="0.4"/>
+                                <circle cx="540" cy="50" r="35" fill="#FFD700" opacity="0.3"/>
+                            </svg>
+                            <span class="listing-badge">For Sale</span>
+                            <button class="listing-save" aria-label="Save">♡</button>
+                        </div>
+                        <div class="listing-body">
+                            <h3 class="listing-address">25 Matakana Valley Road</h3>
+                            <p class="listing-suburb">Matakana, Rodney</p>
+                            <div class="listing-features">
+                                <span><strong>5</strong> Bed</span>
+                                <span><strong>4</strong> Bath</span>
+                                <span><strong>3</strong> Car</span>
+                                <span><strong>3.8</strong>ha</span>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="listing-price">$6,100,000</span>
+                                <a href="#contact" class="listing-enquire">Enquire →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="property-grid">
-                <!-- Property 1 -->
-                <div class="property-card" data-category="waterfront">
-                    <div class="property-image">
-                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="p1sky" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="0%" stop-color="#87CEEB"/>
-                                    <stop offset="100%" stop-color="#E0F0FF"/>
-                                </linearGradient>
-                            </defs>
-                            <rect width="600" height="400" fill="url(#p1sky)"/>
-                            <rect x="0" y="280" width="600" height="120" fill="#2E86AB" opacity="0.4"/>
-                            <rect x="100" y="150" width="400" height="150" fill="#f5f0e8" rx="2"/>
-                            <polygon points="80,150 300,60 520,150" fill="#8B7355"/>
-                            <rect x="250" y="210" width="100" height="90" rx="50 50 0 0" fill="#c8a45e" opacity="0.6"/>
-                            <rect x="140" y="180" width="60" height="50" fill="#87CEEB" opacity="0.5"/>
-                            <rect x="400" y="180" width="60" height="50" fill="#87CEEB" opacity="0.5"/>
-                            <rect x="0" y="300" width="600" height="100" fill="#4a8" opacity="0.3"/>
-                        </svg>
-                        <div class="property-overlay">
-                            <span class="property-tag">Waterfront</span>
-                            <button class="property-fav" aria-label="Favourite">♡</button>
-                        </div>
-                        <div class="property-shine"></div>
-                    </div>
-                    <div class="property-info">
-                        <h3 class="property-title">Coastal Haven Estate</h3>
-                        <p class="property-location">Takapuna, North Shore</p>
-                        <div class="property-features">
-                            <span>5 Bed</span><span>4 Bath</span><span>3 Car</span><span>680m²</span>
-                        </div>
-                        <div class="property-price">
-                            <span class="price">$6,450,000</span>
-                            <a href="#contact" class="property-link">Enquire →</a>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Property 2 -->
-                <div class="property-card" data-category="lifestyle">
-                    <div class="property-image">
-                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="600" height="400" fill="#87CEEB"/>
-                            <rect x="0" y="250" width="600" height="150" fill="#4a8" opacity="0.5"/>
-                            <rect x="150" y="130" width="300" height="170" fill="#f5f0e8"/>
-                            <polygon points="130,130 300,50 470,130" fill="#5a4a3a"/>
-                            <rect x="260" y="200" width="80" height="100" fill="#c8a45e" opacity="0.5"/>
-                            <rect x="180" y="160" width="50" height="40" fill="#87CEEB" opacity="0.5"/>
-                            <rect x="370" y="160" width="50" height="40" fill="#87CEEB" opacity="0.5"/>
-                            <circle cx="500" cy="100" r="35" fill="#FFD700" opacity="0.3"/>
-                            <ellipse cx="80" cy="240" rx="60" ry="50" fill="#2d6" opacity="0.4"/>
-                            <ellipse cx="520" cy="230" rx="70" ry="55" fill="#2d6" opacity="0.35"/>
-                        </svg>
-                        <div class="property-overlay">
-                            <span class="property-tag">Lifestyle</span>
-                            <button class="property-fav" aria-label="Favourite">♡</button>
-                        </div>
-                        <div class="property-shine"></div>
-                    </div>
-                    <div class="property-info">
-                        <h3 class="property-title">Vineyard Ridge Retreat</h3>
-                        <p class="property-location">Waiheke Island</p>
-                        <div class="property-features">
-                            <span>4 Bed</span><span>3 Bath</span><span>2 Car</span><span>2.4ha</span>
-                        </div>
-                        <div class="property-price">
-                            <span class="price">$8,900,000</span>
-                            <a href="#contact" class="property-link">Enquire →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Property 3 -->
-                <div class="property-card" data-category="urban">
-                    <div class="property-image">
-                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="600" height="400" fill="#1a2a4a"/>
-                            <rect x="50" y="100" width="120" height="250" fill="#2a3a5a"/>
-                            <rect x="200" y="60" width="200" height="290" fill="#3a4a6a"/>
-                            <rect x="430" y="120" width="120" height="230" fill="#2a3a5a"/>
-                            <rect x="220" y="80" width="40" height="30" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="280" y="80" width="40" height="30" fill="#c8a45e" opacity="0.3"/>
-                            <rect x="340" y="80" width="40" height="30" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="220" y="130" width="40" height="30" fill="#c8a45e" opacity="0.3"/>
-                            <rect x="280" y="130" width="40" height="30" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="340" y="130" width="40" height="30" fill="#c8a45e" opacity="0.3"/>
-                            <rect x="70" y="140" width="30" height="25" fill="#c8a45e" opacity="0.3"/>
-                            <rect x="120" y="140" width="30" height="25" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="450" y="160" width="30" height="25" fill="#c8a45e" opacity="0.3"/>
-                            <rect x="500" y="160" width="30" height="25" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="0" y="350" width="600" height="50" fill="#0d1628"/>
-                        </svg>
-                        <div class="property-overlay">
-                            <span class="property-tag">Urban Luxury</span>
-                            <button class="property-fav" aria-label="Favourite">♡</button>
-                        </div>
-                        <div class="property-shine"></div>
-                    </div>
-                    <div class="property-info">
-                        <h3 class="property-title">Viaduct Penthouse Suite</h3>
-                        <p class="property-location">Viaduct Harbour, Auckland CBD</p>
-                        <div class="property-features">
-                            <span>3 Bed</span><span>2 Bath</span><span>2 Car</span><span>240m²</span>
-                        </div>
-                        <div class="property-price">
-                            <span class="price">$4,800,000</span>
-                            <a href="#contact" class="property-link">Enquire →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Property 4 -->
-                <div class="property-card" data-category="waterfront">
-                    <div class="property-image">
-                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="600" height="400" fill="#FFE4B5"/>
-                            <circle cx="500" cy="80" r="50" fill="#FFD700" opacity="0.4"/>
-                            <rect x="0" y="300" width="600" height="100" fill="#2E86AB" opacity="0.3"/>
-                            <rect x="120" y="160" width="360" height="140" fill="#fff" opacity="0.9"/>
-                            <rect x="120" y="130" width="360" height="30" fill="#f5f0e8"/>
-                            <rect x="250" y="220" width="100" height="80" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="150" y="180" width="60" height="50" fill="#87CEEB" opacity="0.4"/>
-                            <rect x="390" y="180" width="60" height="50" fill="#87CEEB" opacity="0.4"/>
-                            <rect x="80" y="240" width="40" height="60" fill="#8B7355" opacity="0.3"/>
-                            <rect x="480" y="230" width="40" height="70" fill="#8B7355" opacity="0.3"/>
-                        </svg>
-                        <div class="property-overlay">
-                            <span class="property-tag">Waterfront</span>
-                            <button class="property-fav" aria-label="Favourite">♡</button>
-                        </div>
-                        <div class="property-shine"></div>
-                    </div>
-                    <div class="property-info">
-                        <h3 class="property-title">Mission Bay Prestige</h3>
-                        <p class="property-location">Mission Bay, Auckland</p>
-                        <div class="property-features">
-                            <span>6 Bed</span><span>5 Bath</span><span>4 Car</span><span>820m²</span>
-                        </div>
-                        <div class="property-price">
-                            <span class="price">$7,250,000</span>
-                            <a href="#contact" class="property-link">Enquire →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Property 5 -->
-                <div class="property-card" data-category="rural">
-                    <div class="property-image">
-                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="600" height="400" fill="#87CEEB"/>
-                            <ellipse cx="300" cy="380" rx="400" ry="120" fill="#4a8" opacity="0.4"/>
-                            <rect x="200" y="180" width="200" height="120" fill="#8B7355"/>
-                            <polygon points="180,180 300,100 420,180" fill="#5a4a3a"/>
-                            <rect x="270" y="220" width="60" height="80" fill="#c8a45e" opacity="0.5"/>
-                            <rect x="220" y="200" width="35" height="30" fill="#fff" opacity="0.4"/>
-                            <rect x="345" y="200" width="35" height="30" fill="#fff" opacity="0.4"/>
-                            <ellipse cx="100" cy="280" rx="50" ry="60" fill="#2d6" opacity="0.5"/>
-                            <ellipse cx="500" cy="270" rx="60" ry="70" fill="#2d6" opacity="0.45"/>
-                            <rect x="480" y="250" width="8" height="40" fill="#8B7355" opacity="0.5"/>
-                            <line x1="50" y1="300" x2="550" y2="300" stroke="#8B7355" stroke-width="2" opacity="0.2"/>
-                        </svg>
-                        <div class="property-overlay">
-                            <span class="property-tag">Rural Estate</span>
-                            <button class="property-fav" aria-label="Favourite">♡</button>
-                        </div>
-                        <div class="property-shine"></div>
-                    </div>
-                    <div class="property-info">
-                        <h3 class="property-title">Kumeu Country Manor</h3>
-                        <p class="property-location">Kumeu, West Auckland</p>
-                        <div class="property-features">
-                            <span>7 Bed</span><span>5 Bath</span><span>6 Car</span><span>5.2ha</span>
-                        </div>
-                        <div class="property-price">
-                            <span class="price">$5,600,000</span>
-                            <a href="#contact" class="property-link">Enquire →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Property 6 -->
-                <div class="property-card" data-category="lifestyle">
-                    <div class="property-image">
-                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="600" height="400" fill="#E0F0FF"/>
-                            <rect x="0" y="280" width="600" height="120" fill="#4a8" opacity="0.3"/>
-                            <rect x="100" y="140" width="180" height="160" fill="#f5f0e8"/>
-                            <rect x="320" y="160" width="180" height="140" fill="#f5f0e8"/>
-                            <rect x="280" y="140" width="40" height="160" fill="#e8dcc8"/>
-                            <polygon points="80,140 190,70 300,140" fill="#8B7355"/>
-                            <polygon points="300,160 410,90 520,160" fill="#8B7355"/>
-                            <rect x="160" y="220" width="60" height="80" fill="#c8a45e" opacity="0.4"/>
-                            <rect x="380" y="200" width="60" height="60" fill="#87CEEB" opacity="0.4"/>
-                            <rect x="120" y="170" width="40" height="35" fill="#87CEEB" opacity="0.4"/>
-                            <rect x="0" y="310" width="200" height="4" fill="#c8a45e" opacity="0.15"/>
-                            <circle cx="520" cy="60" r="30" fill="#FFD700" opacity="0.25"/>
-                        </svg>
-                        <div class="property-overlay">
-                            <span class="property-tag">Lifestyle</span>
-                            <button class="property-fav" aria-label="Favourite">♡</button>
-                        </div>
-                        <div class="property-shine"></div>
-                    </div>
-                    <div class="property-info">
-                        <h3 class="property-title">Matakana Wine Estate</h3>
-                        <p class="property-location">Matakana, Rodney</p>
-                        <div class="property-features">
-                            <span>5 Bed</span><span>4 Bath</span><span>3 Car</span><span>3.8ha</span>
-                        </div>
-                        <div class="property-price">
-                            <span class="price">$6,100,000</span>
-                            <a href="#contact" class="property-link">Enquire →</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="section-cta">
+                <a href="#listings" class="btn btn-yellow">View All Listings</a>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
+    <!-- ====== SOLD SECTION ====== -->
+    <section class="sold-section" id="sold">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Recently Sold</h2>
+                    <p class="section-subtitle">A selection of our recent sales results</p>
+                </div>
+            </div>
+            <div class="sold-grid">
+                <div class="sold-card">
+                    <div class="sold-image">
+                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="600" height="400" fill="#e8f4fd"/>
+                            <rect x="100" y="120" width="400" height="200" fill="#fff"/>
+                            <polygon points="80,120 300,30 520,120" fill="#6a5a48"/>
+                            <rect x="250" y="200" width="100" height="120" rx="50 50 0 0" fill="#8a7050" opacity="0.5"/>
+                            <rect x="140" y="160" width="70" height="50" fill="#a8d4e8" opacity="0.45"/>
+                            <rect x="390" y="160" width="70" height="50" fill="#a8d4e8" opacity="0.45"/>
+                            <rect x="0" y="320" width="600" height="80" fill="#6db85a" opacity="0.25"/>
+                        </svg>
+                        <div class="sold-banner">SOLD</div>
+                    </div>
+                    <div class="sold-body">
+                        <h3>14 Arney Road, Remuera</h3>
+                        <p class="sold-detail">5 Bed · 3 Bath · 4 Car</p>
+                    </div>
+                </div>
+                <div class="sold-card">
+                    <div class="sold-image">
+                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="600" height="400" fill="#f0ece4"/>
+                            <rect x="120" y="140" width="360" height="180" fill="#fff"/>
+                            <rect x="120" y="120" width="360" height="20" fill="#e0d8c8"/>
+                            <rect x="260" y="220" width="80" height="100" fill="#8a7050"/>
+                            <rect x="160" y="170" width="60" height="45" fill="#a8d4e8" opacity="0.4"/>
+                            <rect x="380" y="170" width="60" height="45" fill="#a8d4e8" opacity="0.4"/>
+                            <rect x="0" y="320" width="600" height="80" fill="#7ab868" opacity="0.25"/>
+                        </svg>
+                        <div class="sold-banner">SOLD</div>
+                    </div>
+                    <div class="sold-body">
+                        <h3>7 Victoria Avenue, Devonport</h3>
+                        <p class="sold-detail">4 Bed · 2 Bath · 2 Car</p>
+                    </div>
+                </div>
+                <div class="sold-card">
+                    <div class="sold-image">
+                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="600" height="400" fill="#e0f0ff"/>
+                            <rect x="0" y="300" width="600" height="100" fill="#4aa8d4" opacity="0.2"/>
+                            <rect x="150" y="150" width="300" height="170" fill="#fff"/>
+                            <rect x="150" y="130" width="300" height="20" fill="#e0d8c8"/>
+                            <rect x="260" y="220" width="80" height="100" fill="#8a7050"/>
+                            <rect x="180" y="180" width="50" height="40" fill="#a8d4e8" opacity="0.4"/>
+                            <rect x="370" y="180" width="50" height="40" fill="#a8d4e8" opacity="0.4"/>
+                            <rect x="0" y="310" width="600" height="90" fill="#6db85a" opacity="0.2"/>
+                        </svg>
+                        <div class="sold-banner">SOLD</div>
+                    </div>
+                    <div class="sold-body">
+                        <h3>23 Cheltenham Road, Devonport</h3>
+                        <p class="sold-detail">6 Bed · 4 Bath · 3 Car</p>
+                    </div>
+                </div>
+                <div class="sold-card">
+                    <div class="sold-image">
+                        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="600" height="400" fill="#87CEEB"/>
+                            <rect x="0" y="280" width="600" height="120" fill="#6db85a" opacity="0.3"/>
+                            <rect x="100" y="100" width="400" height="220" fill="#f0e8d8"/>
+                            <polygon points="80,100 300,20 520,100" fill="#5a4a38"/>
+                            <rect x="250" y="200" width="100" height="120" fill="#8a7050" opacity="0.5"/>
+                            <rect x="140" y="140" width="70" height="50" fill="#fff" opacity="0.4"/>
+                            <rect x="390" y="140" width="70" height="50" fill="#fff" opacity="0.4"/>
+                        </svg>
+                        <div class="sold-banner">SOLD</div>
+                    </div>
+                    <div class="sold-body">
+                        <h3>31 Herne Bay Road, Herne Bay</h3>
+                        <p class="sold-detail">5 Bed · 4 Bath · 2 Car</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-cta">
+                <a href="#sold" class="btn btn-outline-dark">View All Sold Properties</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== WHY CHOOSE SHARON ====== -->
     <section class="about" id="about">
         <div class="container">
             <div class="about-grid">
                 <div class="about-image">
-                    <svg viewBox="0 0 500 600" xmlns="http://www.w3.org/2000/svg">
-                        <defs>
-                            <linearGradient id="portraitBg" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="#132240"/>
-                                <stop offset="100%" stop-color="#1a3058"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="500" height="600" rx="8" fill="url(#portraitBg)"/>
-                        <!-- Sharon -->
-                        <circle cx="190" cy="220" r="60" fill="#f5deb3"/>
-                        <ellipse cx="190" cy="160" rx="50" ry="45" fill="#4a3728"/>
-                        <rect x="155" y="280" width="70" height="120" rx="4" fill="#1a1a2e"/>
-                        <circle cx="190" cy="215" r="3" fill="#4a3728"/>
-                        <circle cx="175" cy="210" r="2.5" fill="#4a3728"/>
-                        <circle cx="205" cy="210" r="2.5" fill="#4a3728"/>
-                        <path d="M178 230 Q190 240 202 230" stroke="#c8a45e" stroke-width="1.5" fill="none"/>
-                        <circle cx="190" cy="290" r="8" fill="#c8a45e" opacity="0.6"/>
-                        <!-- Kirk -->
-                        <circle cx="310" cy="230" r="55" fill="#e8c99b"/>
-                        <rect x="270" y="170" width="80" height="40" rx="4" fill="#3a2a1a"/>
-                        <rect x="280" y="290" width="60" height="120" rx="4" fill="#2a2a3e"/>
-                        <circle cx="310" cy="225" r="3" fill="#3a2a1a"/>
-                        <circle cx="295" cy="220" r="2.5" fill="#3a2a1a"/>
-                        <circle cx="325" cy="220" r="2.5" fill="#3a2a1a"/>
-                        <path d="M298 240 Q310 248 322 240" stroke="#c8a45e" stroke-width="1.5" fill="none"/>
-                        <rect x="280" y="295" width="60" height="5" fill="#c8a45e" opacity="0.4"/>
-                        <!-- Gold frame accent -->
-                        <rect x="10" y="10" width="480" height="580" rx="8" fill="none" stroke="#c8a45e" stroke-width="2" opacity="0.3"/>
-                        <!-- Experience badge -->
-                        <circle cx="420" cy="520" r="45" fill="#c8a45e"/>
-                        <text x="420" y="512" text-anchor="middle" font-family="Playfair Display" font-size="22" font-weight="700" fill="#0a1628">25+</text>
-                        <text x="420" y="535" text-anchor="middle" font-family="Inter" font-size="10" fill="#0a1628">YEARS</text>
+                    <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="700" rx="8" fill="#f0ece4"/>
+                        <!-- Sharon portrait -->
+                        <circle cx="300" cy="280" r="120" fill="#f0d5b0"/>
+                        <ellipse cx="300" cy="200" rx="100" ry="80" fill="#c8a860"/>
+                        <circle cx="280" cy="270" r="5" fill="#4a3a28"/>
+                        <circle cx="320" cy="270" r="5" fill="#4a3a28"/>
+                        <path d="M285 300 Q300 315 315 300" stroke="#c08060" stroke-width="2.5" fill="none"/>
+                        <rect x="250" y="400" width="100" height="200" rx="6" fill="#3C3C3C"/>
+                        <!-- Gold necklace -->
+                        <ellipse cx="300" cy="400" rx="40" ry="15" fill="none" stroke="#FED100" stroke-width="3"/>
+                        <circle cx="300" cy="415" r="6" fill="#FED100"/>
+                        <!-- Yellow accent bar -->
+                        <rect x="0" y="0" width="12" height="700" fill="#FED100"/>
                     </svg>
                 </div>
                 <div class="about-content">
-                    <p class="section-subtitle">Our Story</p>
-                    <h2 class="section-title">Sharon & Kirk Maxwell</h2>
-                    <p class="about-text">With over two decades of combined experience in Auckland's luxury property market, we bring an unparalleled understanding of prestige real estate. Our approach combines deep local knowledge with international marketing reach, ensuring every property receives the attention it deserves.</p>
-                    <p class="about-text">As a husband-and-wife team, we offer a unique dual perspective — Sharon's eye for design and client relationships paired with Kirk's expertise in negotiation and market analysis. Together, we've helped hundreds of families find their dream homes.</p>
-                    <div class="about-values">
-                        <div class="value-item">
-                            <span class="value-icon">◆</span>
+                    <h2 class="section-title">Why Choose Sharon?</h2>
+                    <p class="about-lead">Sharon Maxwell &amp; husband Kirk have an outstanding track record for consistent exceptional sales results in any market conditions.</p>
+                    <p class="about-text">With over 25 years of combined experience in Auckland's premium property market, Sharon and Kirk bring unmatched local knowledge and negotiation expertise. As a Ray White team, they leverage one of the largest real estate networks in Australasia.</p>
+                    <p class="about-text">Their approach combines genuine care for their clients with strategic marketing campaigns and deep market insights. Every vendor receives a tailored, premium service designed to maximise their property's potential.</p>
+
+                    <div class="about-highlights">
+                        <div class="highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 32 32" width="32" height="32" fill="none"><path d="M16 2l4 8 8 1-6 6 2 8-8-4-8 4 2-8-6-6 8-1z" fill="#FED100"/></svg>
+                            </div>
                             <div>
-                                <h4>Integrity First</h4>
-                                <p>Transparent communication and honest advice at every step.</p>
+                                <strong>Top 1% Nationwide</strong>
+                                <p>Consistently ranked among NZ's highest performing agents</p>
                             </div>
                         </div>
-                        <div class="value-item">
-                            <span class="value-icon">◆</span>
+                        <div class="highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 32 32" width="32" height="32" fill="none"><rect x="4" y="4" width="24" height="24" rx="4" stroke="#FED100" stroke-width="2.5"/><path d="M10 16l4 4 8-8" stroke="#FED100" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </div>
                             <div>
-                                <h4>Premium Service</h4>
-                                <p>White-glove experience from first meeting to settlement.</p>
+                                <strong>REAA Licensed</strong>
+                                <p>Fully licensed under the Real Estate Agents Act 2008</p>
                             </div>
                         </div>
-                        <div class="value-item">
-                            <span class="value-icon">◆</span>
+                        <div class="highlight">
+                            <div class="highlight-icon">
+                                <svg viewBox="0 0 32 32" width="32" height="32" fill="none"><circle cx="16" cy="16" r="12" stroke="#FED100" stroke-width="2.5"/><path d="M16 8v8l6 3" stroke="#FED100" stroke-width="2.5" stroke-linecap="round"/></svg>
+                            </div>
                             <div>
-                                <h4>Market Leaders</h4>
-                                <p>Consistently ranked in the top 1% of agents nationwide.</p>
+                                <strong>Premium Marketing</strong>
+                                <p>Professional photography, video, staging &amp; digital campaigns</p>
                             </div>
                         </div>
                     </div>
+
+                    <a href="#contact" class="btn btn-yellow">Get In Touch</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-header">
-                <p class="section-subtitle light">What We Offer</p>
-                <h2 class="section-title light">Our Services</h2>
+    <!-- ====== APPRAISAL CTA ====== -->
+    <section class="appraisal-cta" id="appraisal">
+        <div class="container appraisal-inner">
+            <div class="appraisal-content">
+                <h2>What's My Home Worth?</h2>
+                <p>Get a free, no-obligation market appraisal from Sharon &amp; Kirk. Understand your property's true value in today's market.</p>
+                <a href="#contact" class="btn btn-yellow btn-lg">Request Free Appraisal</a>
             </div>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 42V18L24 6L42 18V42H30V30H18V42H6Z" stroke="#c8a45e" stroke-width="2.5" fill="none"/>
-                        </svg>
-                    </div>
-                    <h3>Residential Sales</h3>
-                    <p>Expert marketing and negotiation for premium residential properties across Auckland's finest suburbs.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="24" cy="24" r="18" stroke="#c8a45e" stroke-width="2.5"/>
-                            <path d="M24 14V24L32 28" stroke="#c8a45e" stroke-width="2.5" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h3>Buyer Representation</h3>
-                    <p>Dedicated buyer's agent service ensuring you secure the right property at the right price.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="6" y="10" width="36" height="28" rx="2" stroke="#c8a45e" stroke-width="2.5"/>
-                            <path d="M6 20H42" stroke="#c8a45e" stroke-width="2.5"/>
-                            <path d="M16 28H26" stroke="#c8a45e" stroke-width="2.5" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h3>Market Appraisals</h3>
-                    <p>Comprehensive property valuations backed by current market data and decades of local expertise.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 38V22L8 22L24 8L40 22L36 22V38H12Z" stroke="#c8a45e" stroke-width="2.5" fill="none"/>
-                            <path d="M20 38V28H28V38" stroke="#c8a45e" stroke-width="2.5"/>
-                        </svg>
-                    </div>
-                    <h3>Investment Advisory</h3>
-                    <p>Strategic guidance for property investors seeking premium returns in Auckland's growth corridors.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="10" y="6" width="28" height="36" rx="2" stroke="#c8a45e" stroke-width="2.5"/>
-                            <circle cx="24" cy="20" r="6" stroke="#c8a45e" stroke-width="2"/>
-                            <path d="M18 34H30" stroke="#c8a45e" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <h3>Premium Marketing</h3>
-                    <p>Professional photography, videography, staging, and targeted digital campaigns for maximum exposure.</p>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 38L24 10L40 38H8Z" stroke="#c8a45e" stroke-width="2.5" fill="none"/>
-                            <path d="M24 26V30" stroke="#c8a45e" stroke-width="2.5" stroke-linecap="round"/>
-                            <circle cx="24" cy="34" r="1.5" fill="#c8a45e"/>
-                        </svg>
-                    </div>
-                    <h3>Auction Services</h3>
-                    <p>Full auction campaign management with proven strategies to achieve premium results under the hammer.</p>
-                </div>
+            <div class="appraisal-graphic">
+                <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="400" height="300" fill="none"/>
+                    <rect x="50" y="60" width="300" height="200" rx="8" fill="#fff" opacity="0.15"/>
+                    <rect x="80" y="90" width="160" height="20" rx="4" fill="#FED100" opacity="0.6"/>
+                    <rect x="80" y="130" width="240" height="8" rx="4" fill="#fff" opacity="0.2"/>
+                    <rect x="80" y="150" width="200" height="8" rx="4" fill="#fff" opacity="0.15"/>
+                    <rect x="80" y="180" width="240" height="40" rx="6" fill="#FED100" opacity="0.4"/>
+                    <text x="200" y="206" text-anchor="middle" font-family="Inter" font-size="16" font-weight="700" fill="#3C3C3C">GET APPRAISAL</text>
+                </svg>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- ====== TESTIMONIALS ====== -->
     <section class="testimonials" id="testimonials">
         <div class="container">
             <div class="section-header">
-                <p class="section-subtitle">Client Stories</p>
-                <h2 class="section-title">What Our Clients Say</h2>
+                <div>
+                    <h2 class="section-title">Customer Care</h2>
+                    <p class="section-subtitle">What our clients say about working with us</p>
+                </div>
             </div>
-            <div class="testimonials-grid">
+            <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-stars">★★★★★</div>
                     <p class="testimonial-text">"Sharon and Kirk made selling our Herne Bay home an absolute pleasure. Their attention to detail, market knowledge, and genuine care for our family was exceptional. We achieved well above our expectations."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">JW</div>
+                        <div class="author-avatar">JR</div>
                         <div>
-                            <strong>James & Wendy Richardson</strong>
+                            <strong>James &amp; Wendy Richardson</strong>
                             <span>Herne Bay, Auckland</span>
                         </div>
                     </div>
@@ -542,20 +659,20 @@
                     <div class="testimonial-stars">★★★★★</div>
                     <p class="testimonial-text">"As overseas buyers, we needed someone we could trust completely. Kirk's negotiation skills and Sharon's understanding of what we wanted in a family home made the entire process seamless."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">MT</div>
+                        <div class="author-avatar">MC</div>
                         <div>
-                            <strong>Michael & Tanya Chen</strong>
+                            <strong>Michael &amp; Tanya Chen</strong>
                             <span>Remuera, Auckland</span>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-stars">★★★★★</div>
-                    <p class="testimonial-text">"The Maxwell team's marketing campaign for our Devonport property was world-class. The photography, video tour, and targeted advertising brought buyers from all over New Zealand. Incredible result at auction."</p>
+                    <p class="testimonial-text">"The Maxwell team's marketing campaign was world-class. The photography, video tour, and targeted advertising brought buyers from all over New Zealand. Incredible result at auction."</p>
                     <div class="testimonial-author">
-                        <div class="author-avatar">SP</div>
+                        <div class="author-avatar">SH</div>
                         <div>
-                            <strong>Sarah & Paul Henderson</strong>
+                            <strong>Sarah &amp; Paul Henderson</strong>
                             <span>Devonport, North Shore</span>
                         </div>
                     </div>
@@ -564,34 +681,39 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- ====== CONTACT ====== -->
     <section class="contact" id="contact">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info">
-                    <p class="section-subtitle">Let's Connect</p>
                     <h2 class="section-title">Get In Touch</h2>
                     <p class="contact-text">Whether you're looking to buy, sell, or simply want to understand the current market, we'd love to hear from you.</p>
                     <div class="contact-details">
                         <div class="contact-item">
-                            <span class="contact-icon">📍</span>
+                            <div class="contact-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FED100" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            </div>
                             <div>
                                 <strong>Office</strong>
                                 <p>12 Hurstmere Road, Takapuna<br>Auckland 0622, New Zealand</p>
                             </div>
                         </div>
                         <div class="contact-item">
-                            <span class="contact-icon">📞</span>
+                            <div class="contact-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FED100" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                            </div>
                             <div>
                                 <strong>Phone</strong>
                                 <p>Sharon: 021 555 0180<br>Kirk: 021 555 0181</p>
                             </div>
                         </div>
                         <div class="contact-item">
-                            <span class="contact-icon">✉️</span>
+                            <div class="contact-icon-wrap">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#FED100" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4l-10 8L2 4"/></svg>
+                            </div>
                             <div>
                                 <strong>Email</strong>
-                                <p>sharon@maxwellrealestate.co.nz<br>kirk@maxwellrealestate.co.nz</p>
+                                <p>sharon@raywhite.com<br>kirk@raywhite.com</p>
                             </div>
                         </div>
                     </div>
@@ -630,57 +752,64 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="4"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-full">Send Enquiry</button>
+                    <button type="submit" class="btn btn-yellow btn-full">Send Enquiry</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ====== FOOTER ====== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="footer-logo">
-                        <span class="logo-icon">M</span>
-                        <div class="logo-text">
-                            <span class="logo-name">Maxwell</span>
-                            <span class="logo-tagline">Luxury Real Estate</span>
+                    <div class="rw-logo footer-rw-logo">
+                        <div class="rw-logo-yellow">
+                            <span class="rw-logo-text">Ray</span>
+                            <span class="rw-logo-text">White.</span>
                         </div>
                     </div>
-                    <p>Your trusted partners in Auckland's luxury property market. Licensed under the REAA 2008.</p>
+                    <p class="footer-agent">Sharon Maxwell &amp; Kirk</p>
+                    <p class="footer-desc">Your trusted partners in Auckland's premium property market.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z"/></svg></a>
+                        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/></svg></a>
+                        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.93 29 29 0 00.46-5.33 29 29 0 00-.46-5.42z"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="#fff"/></svg></a>
+                    </div>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
                     <ul>
-                        <li><a href="#properties">Properties</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#listings">For Sale</a></li>
+                        <li><a href="#sold">Sold</a></li>
+                        <li><a href="#about">Why Choose Sharon</a></li>
+                        <li><a href="#testimonials">Customer Care</a></li>
+                        <li><a href="#contact">Get In Touch</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
                     <h4>Services</h4>
                     <ul>
-                        <li><a href="#services">Residential Sales</a></li>
-                        <li><a href="#services">Buyer Representation</a></li>
-                        <li><a href="#services">Market Appraisals</a></li>
-                        <li><a href="#services">Auction Services</a></li>
+                        <li><a href="#contact">Residential Sales</a></li>
+                        <li><a href="#contact">Buyer Representation</a></li>
+                        <li><a href="#appraisal">Market Appraisals</a></li>
+                        <li><a href="#contact">Auction Services</a></li>
+                        <li><a href="#contact">Investment Advisory</a></li>
                     </ul>
                 </div>
                 <div class="footer-links">
-                    <h4>Legal</h4>
+                    <h4>CRM</h4>
                     <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">REAA Disclosure</a></li>
+                        <li><a href="crm/dashboard.html">CRM Dashboard</a></li>
+                        <li><a href="crm/dashboard.html#contacts">Contacts</a></li>
+                        <li><a href="crm/dashboard.html#pipeline">Pipeline</a></li>
+                        <li><a href="crm/dashboard.html#analytics">Analytics</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Sharon & Kirk Maxwell — Maxwell Luxury Real Estate. All rights reserved.</p>
-                <p>Licensed under the Real Estate Agents Act 2008</p>
+                <p>&copy; 2026 Sharon Maxwell &amp; Kirk — Ray White Real Estate. All rights reserved.</p>
+                <p>Licensed under the Real Estate Agents Act 2008 | <a href="#">Privacy Policy</a> | <a href="#">REAA Disclosure</a></p>
             </div>
         </div>
     </footer>
