@@ -29,14 +29,16 @@ function initNav() {
     }
 }
 
-/* ============ HERO SLIDER ============ */
+/* ============ HERO SLIDER with Progress Bar ============ */
 function initHeroSlider() {
     const slides = document.querySelectorAll('.hero-slide');
     const dots = document.querySelectorAll('.hero-dot');
     const prevBtn = document.getElementById('heroPrev');
     const nextBtn = document.getElementById('heroNext');
+    const progressBar = document.getElementById('heroProgress');
     let current = 0;
     let interval;
+    const SLIDE_DURATION = 6000;
 
     function goTo(idx) {
         slides[current].classList.remove('active');
@@ -44,13 +46,24 @@ function initHeroSlider() {
         current = (idx + slides.length) % slides.length;
         slides[current].classList.add('active');
         dots[current].classList.add('active');
+        resetProgress();
     }
 
     function next() { goTo(current + 1); }
     function prev() { goTo(current - 1); }
 
+    function resetProgress() {
+        if (!progressBar) return;
+        progressBar.classList.remove('animate');
+        progressBar.style.width = '0%';
+        // Force reflow
+        void progressBar.offsetWidth;
+        progressBar.classList.add('animate');
+    }
+
     function startAuto() {
-        interval = setInterval(next, 6000);
+        resetProgress();
+        interval = setInterval(next, SLIDE_DURATION);
     }
 
     function resetAuto() {
