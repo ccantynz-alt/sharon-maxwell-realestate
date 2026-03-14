@@ -209,10 +209,10 @@ ul { list-style: none; }
    ============================================ */
 .ribbon-bow {
     position: absolute;
-    left: calc((100% - min(1280px, 100%)) / 2 + 38px);
-    top: 2px;
+    left: calc((100% - min(1280px, 100%)) / 2 + 30px);
+    top: -2px;
     z-index: 101;
-    filter: drop-shadow(1px 3px 6px rgba(200,160,0,0.3));
+    filter: drop-shadow(0 2px 8px rgba(180,140,0,0.35));
     pointer-events: none;
     animation: ribbonSway 4s ease-in-out infinite;
 }
