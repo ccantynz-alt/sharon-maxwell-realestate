@@ -39,94 +39,11 @@
     <nav class="nav" id="nav">
         <!-- Yellow bow ribbon -->
         <div class="ribbon-bow" aria-hidden="true">
-            <svg viewBox="0 0 200 220" width="80" height="88" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <!-- Rich gold base gradient -->
-                    <linearGradient id="goldBase" x1="0" y1="0" x2="0.3" y2="1">
-                        <stop offset="0%" stop-color="#FFE566"/>
-                        <stop offset="25%" stop-color="#FED100"/>
-                        <stop offset="55%" stop-color="#E8B900"/>
-                        <stop offset="80%" stop-color="#D4A800"/>
-                        <stop offset="100%" stop-color="#B8920A"/>
-                    </linearGradient>
-                    <!-- Satin highlight -->
-                    <radialGradient id="satinHL" cx="0.4" cy="0.3" r="0.6">
-                        <stop offset="0%" stop-color="#FFF4A8" stop-opacity="0.8"/>
-                        <stop offset="40%" stop-color="#FFE44D" stop-opacity="0.3"/>
-                        <stop offset="100%" stop-color="#FED100" stop-opacity="0"/>
-                    </radialGradient>
-                    <!-- Deep shadow for folds -->
-                    <linearGradient id="foldShadow" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#C89E00"/>
-                        <stop offset="100%" stop-color="#9A7800"/>
-                    </linearGradient>
-                    <!-- Tail gradient left -->
-                    <linearGradient id="tailL" x1="0.8" y1="0" x2="0.2" y2="1">
-                        <stop offset="0%" stop-color="#FED100"/>
-                        <stop offset="40%" stop-color="#E8B900"/>
-                        <stop offset="100%" stop-color="#B8920A"/>
-                    </linearGradient>
-                    <!-- Tail gradient right -->
-                    <linearGradient id="tailR" x1="0.2" y1="0" x2="0.8" y2="1">
-                        <stop offset="0%" stop-color="#FED100"/>
-                        <stop offset="40%" stop-color="#E8B900"/>
-                        <stop offset="100%" stop-color="#B8920A"/>
-                    </linearGradient>
-                    <!-- Knot gradient -->
-                    <radialGradient id="knotG" cx="0.45" cy="0.4" r="0.55">
-                        <stop offset="0%" stop-color="#FFE44D"/>
-                        <stop offset="50%" stop-color="#FED100"/>
-                        <stop offset="100%" stop-color="#B8920A"/>
-                    </radialGradient>
-                </defs>
-
-                <!-- ==== LEFT TAIL — flowing ribbon ==== -->
-                <path d="M90 90 C82 108, 62 140, 48 170 C44 180, 38 192, 30 200 L36 194 C40 186, 44 178, 50 165 C60 142, 76 112, 86 92Z" fill="url(#tailL)" opacity="0.95"/>
-                <path d="M88 92 C82 106, 68 135, 56 158 L60 154 C70 134, 80 110, 86 94Z" fill="#FFE44D" opacity="0.25"/>
-                <!-- Left tail V-notch -->
-                <path d="M30 200 L24 214 L36 204Z" fill="url(#tailL)"/>
-                <path d="M48 170 L36 204 L50 186 Z" fill="url(#tailL)" opacity="0.6"/>
-
-                <!-- ==== RIGHT TAIL — flowing ribbon ==== -->
-                <path d="M110 90 C118 108, 138 140, 152 170 C156 180, 162 192, 170 200 L164 194 C160 186, 156 178, 150 165 C140 142, 124 112, 114 92Z" fill="url(#tailR)" opacity="0.95"/>
-                <path d="M112 92 C118 106, 132 135, 144 158 L140 154 C130 134, 120 110, 114 94Z" fill="#FFE44D" opacity="0.25"/>
-                <!-- Right tail V-notch -->
-                <path d="M170 200 L176 214 L164 204Z" fill="url(#tailR)"/>
-                <path d="M152 170 L164 204 L150 186Z" fill="url(#tailR)" opacity="0.6"/>
-
-                <!-- ==== LEFT LOOP — lush round bow ==== -->
-                <path d="M92 72 C82 60, 40 26, 18 38 C-2 50, 4 78, 30 82 C50 84, 78 80, 92 72Z" fill="url(#goldBase)"/>
-                <!-- Left loop inner fold shadow -->
-                <path d="M88 72 C80 64, 50 38, 30 46 C14 54, 16 72, 36 76 C52 78, 74 76, 88 72Z" fill="url(#foldShadow)" opacity="0.3"/>
-                <!-- Left loop satin sheen -->
-                <path d="M86 70 C78 62, 48 36, 26 44 C10 50, 14 68, 34 74 C50 76, 72 74, 86 70Z" fill="url(#satinHL)"/>
-                <!-- Left loop edge highlight -->
-                <path d="M80 66 C72 58, 46 40, 28 46 C18 50, 20 62, 34 68 C46 72, 66 70, 80 66Z" fill="#FFF4A8" opacity="0.15"/>
-
-                <!-- ==== RIGHT LOOP — lush round bow ==== -->
-                <path d="M108 72 C118 60, 160 26, 182 38 C202 50, 196 78, 170 82 C150 84, 122 80, 108 72Z" fill="url(#goldBase)"/>
-                <!-- Right loop inner fold shadow -->
-                <path d="M112 72 C120 64, 150 38, 170 46 C186 54, 184 72, 164 76 C148 78, 126 76, 112 72Z" fill="url(#foldShadow)" opacity="0.3"/>
-                <!-- Right loop satin sheen -->
-                <path d="M114 70 C122 62, 152 36, 174 44 C190 50, 186 68, 166 74 C150 76, 128 74, 114 70Z" fill="url(#satinHL)"/>
-                <!-- Right loop edge highlight -->
-                <path d="M120 66 C128 58, 154 40, 172 46 C182 50, 180 62, 166 68 C154 72, 134 70, 120 66Z" fill="#FFF4A8" opacity="0.15"/>
-
-                <!-- ==== Small inner loops (peek behind knot) ==== -->
-                <path d="M94 76 C88 70, 66 56, 56 62 C48 68, 52 78, 64 80 C74 80, 88 78, 94 76Z" fill="url(#goldBase)" opacity="0.6"/>
-                <path d="M106 76 C112 70, 134 56, 144 62 C152 68, 148 78, 136 80 C126 80, 112 78, 106 76Z" fill="url(#goldBase)" opacity="0.6"/>
-
-                <!-- ==== CENTER KNOT — gathered fabric ==== -->
-                <ellipse cx="100" cy="76" rx="14" ry="16" fill="url(#foldShadow)"/>
-                <ellipse cx="100" cy="75" rx="12" ry="14" fill="url(#knotG)"/>
-                <!-- Knot fabric wrinkle lines -->
-                <path d="M94 68 C96 72, 96 78, 94 82" stroke="#B8920A" stroke-width="0.8" fill="none" opacity="0.4"/>
-                <path d="M100 66 C100 72, 100 78, 100 84" stroke="#B8920A" stroke-width="0.6" fill="none" opacity="0.3"/>
-                <path d="M106 68 C104 72, 104 78, 106 82" stroke="#B8920A" stroke-width="0.8" fill="none" opacity="0.4"/>
-                <!-- Knot highlight -->
-                <ellipse cx="97" cy="72" rx="6" ry="7" fill="#FFE44D" opacity="0.35"/>
-                <ellipse cx="96" cy="70" rx="3" ry="4" fill="#FFF4A8" opacity="0.3"/>
-            </svg>
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-knot"></div>
+            <div class="bow-tail-left"></div>
+            <div class="bow-tail-right"></div>
         </div>
         <div class="container nav-inner">
             <ul class="nav-links" id="navLinks">
