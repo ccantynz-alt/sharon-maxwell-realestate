@@ -6,10 +6,15 @@ const CRM = {
     KEYS: {
         contacts: 'maxwell_crm_contacts',
         properties: 'maxwell_crm_properties',
-        activities: 'maxwell_crm_activities'
+        activities: 'maxwell_crm_activities',
+        appointments: 'maxwell_crm_appointments',
+        calendarSync: 'maxwell_crm_cal_sync'
     },
     sortField: 'updatedAt',
     sortDir: 'desc',
+    calMonth: new Date().getMonth(),
+    calYear: new Date().getFullYear(),
+    calSelectedDate: new Date().toISOString().split('T')[0],
 
     /* ============ INIT ============ */
     init() {
@@ -66,6 +71,7 @@ const CRM = {
         if (view === 'properties') this.renderProperties();
         if (view === 'activities') this.renderActivities();
         if (view === 'analytics') this.renderAnalytics();
+        if (view === 'calendar') this.renderCalendar();
     },
 
     /* ============ DATA HELPERS ============ */
@@ -801,9 +807,405 @@ const CRM = {
         localStorage.removeItem(this.KEYS.contacts);
         localStorage.removeItem(this.KEYS.properties);
         localStorage.removeItem(this.KEYS.activities);
+        localStorage.removeItem(this.KEYS.appointments);
+        localStorage.removeItem(this.KEYS.calendarSync);
         this.updateDashboard();
         this.renderContacts();
         this.toast('All data cleared');
+    },
+
+    /* ============ CALENDAR & APPOINTMENTS ============ */
+    getAppointments() {
+        return JSON.parse(localStorage.getItem(this.KEYS.appointments) || '[]');
+    },
+    saveAppointments(data) {
+        localStorage.setItem(this.KEYS.appointments, JSON.stringify(data));
+    },
+    getSyncStatus() {
+        return JSON.parse(localStorage.getItem(this.KEYS.calendarSync) || '{"google":false,"outlook":false}');
+    },
+    saveSyncStatus(data) {
+        localStorage.setItem(this.KEYS.calendarSync, JSON.stringify(data));
+    },
+
+    renderCalendar() {
+        this.renderCalendarGrid();
+        this.renderDayAppointments();
+        this.renderUpcoming();
+        this.updateSyncUI();
+    },
+
+    renderCalendarGrid() {
+        const grid = document.getElementById('calendarGrid');
+        const title = document.getElementById('calMonthTitle');
+        if (!grid || !title) return;
+
+        const year = this.calYear;
+        const month = this.calMonth;
+        title.textContent = new Date(year, month).toLocaleDateString('en-NZ', { month: 'long', year: 'numeric' });
+
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const daysInPrev = new Date(year, month, 0).getDate();
+        const today = new Date().toISOString().split('T')[0];
+        const appointments = this.getAppointments();
+
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        let html = days.map(d => `<div class="cal-header">${d}</div>`).join('');
+
+        // Previous month days
+        for (let i = firstDay - 1; i >= 0; i--) {
+            const day = daysInPrev - i;
+            html += `<div class="cal-day other-month">${day}</div>`;
+        }
+
+        // Current month days
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const isToday = dateStr === today;
+            const isSelected = dateStr === this.calSelectedDate;
+            const hasAppts = appointments.some(a => a.date === dateStr);
+            const classes = ['cal-day'];
+            if (isToday) classes.push('today');
+            if (isSelected) classes.push('selected');
+            if (hasAppts) classes.push('has-appointments');
+            html += `<div class="${classes.join(' ')}" onclick="CRM.selectDate('${dateStr}')">${d}</div>`;
+        }
+
+        // Next month days to fill grid
+        const totalCells = firstDay + daysInMonth;
+        const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+        for (let d = 1; d <= remaining; d++) {
+            html += `<div class="cal-day other-month">${d}</div>`;
+        }
+
+        grid.innerHTML = html;
+    },
+
+    selectDate(dateStr) {
+        this.calSelectedDate = dateStr;
+        this.renderCalendarGrid();
+        this.renderDayAppointments();
+    },
+
+    calPrev() {
+        this.calMonth--;
+        if (this.calMonth < 0) { this.calMonth = 11; this.calYear--; }
+        this.renderCalendarGrid();
+    },
+
+    calNext() {
+        this.calMonth++;
+        if (this.calMonth > 11) { this.calMonth = 0; this.calYear++; }
+        this.renderCalendarGrid();
+    },
+
+    renderDayAppointments() {
+        const container = document.getElementById('calDayAppointments');
+        const titleEl = document.getElementById('calDayTitle');
+        if (!container) return;
+
+        const date = new Date(this.calSelectedDate + 'T00:00:00');
+        titleEl.textContent = date.toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+        const appts = this.getAppointments()
+            .filter(a => a.date === this.calSelectedDate)
+            .sort((a, b) => a.time.localeCompare(b.time));
+
+        if (appts.length === 0) {
+            container.innerHTML = '<p class="empty-state">No appointments for this day.</p>';
+            return;
+        }
+
+        container.innerHTML = appts.map(a => `
+            <div class="appointment-item">
+                <div class="appt-time">${this.formatTime(a.time)}</div>
+                <div class="appt-details">
+                    <div class="appt-title">${this.esc(a.title)}</div>
+                    <div class="appt-meta">
+                        <span class="appt-type-badge">${this.apptTypeName(a.type)}</span>
+                        ${a.location ? ' · ' + this.esc(a.location) : ''}
+                        ${a.contactName ? ' · ' + this.esc(a.contactName) : ''}
+                        ${a.duration ? ' · ' + a.duration + ' min' : ''}
+                    </div>
+                </div>
+                <div class="appt-actions">
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${a.id}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${a.id}')">Del</button>
+                </div>
+            </div>
+        `).join('');
+    },
+
+    renderUpcoming() {
+        const container = document.getElementById('upcomingAppointments');
+        if (!container) return;
+
+        const today = new Date().toISOString().split('T')[0];
+        const upcoming = this.getAppointments()
+            .filter(a => a.date >= today)
+            .sort((a, b) => a.date === b.date ? a.time.localeCompare(b.time) : a.date.localeCompare(b.date))
+            .slice(0, 10);
+
+        if (upcoming.length === 0) {
+            container.innerHTML = '<p class="empty-state">No upcoming appointments. Click "+ New Appointment" to schedule one.</p>';
+            return;
+        }
+
+        container.innerHTML = upcoming.map(a => `
+            <div class="appointment-item">
+                <div class="appt-time">${this.formatDate(a.date + 'T00:00:00')}<br>${this.formatTime(a.time)}</div>
+                <div class="appt-details">
+                    <div class="appt-title">${this.esc(a.title)}</div>
+                    <div class="appt-meta">
+                        <span class="appt-type-badge">${this.apptTypeName(a.type)}</span>
+                        ${a.location ? ' · ' + this.esc(a.location) : ''}
+                        ${a.contactName ? ' · ' + this.esc(a.contactName) : ''}
+                    </div>
+                </div>
+                <div class="appt-actions">
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${a.id}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${a.id}')">Del</button>
+                </div>
+            </div>
+        `).join('');
+    },
+
+    openAppointmentModal(id) {
+        document.getElementById('appointmentModalTitle').textContent = id ? 'Edit Appointment' : 'New Appointment';
+        document.getElementById('appointmentModalForm').reset();
+        document.getElementById('appointmentId').value = '';
+
+        // Default date to selected calendar date
+        document.getElementById('apptDate').value = this.calSelectedDate || new Date().toISOString().split('T')[0];
+
+        // Populate contacts
+        const select = document.getElementById('apptContact');
+        const contacts = this.getContacts();
+        select.innerHTML = '<option value="">— No contact —</option>' +
+            contacts.map(c => `<option value="${c.id}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
+
+        if (id) {
+            const a = this.getAppointments().find(x => x.id === id);
+            if (a) {
+                document.getElementById('appointmentId').value = a.id;
+                document.getElementById('apptTitle').value = a.title || '';
+                document.getElementById('apptType').value = a.type || 'viewing';
+                document.getElementById('apptDate').value = a.date || '';
+                document.getElementById('apptTime').value = a.time || '';
+                document.getElementById('apptDuration').value = a.duration || '30';
+                document.getElementById('apptLocation').value = a.location || '';
+                document.getElementById('apptNotes').value = a.notes || '';
+                if (a.contactId) document.getElementById('apptContact').value = a.contactId;
+            }
+        }
+
+        this.openModal('appointmentModal');
+    },
+
+    editAppointment(id) { this.openAppointmentModal(id); },
+
+    saveAppointment(e) {
+        e.preventDefault();
+        const appointments = this.getAppointments();
+        const id = document.getElementById('appointmentId').value;
+        const contactId = document.getElementById('apptContact').value;
+        const contacts = this.getContacts();
+        const contact = contactId ? contacts.find(c => c.id === contactId) : null;
+
+        const data = {
+            title: document.getElementById('apptTitle').value.trim(),
+            type: document.getElementById('apptType').value,
+            date: document.getElementById('apptDate').value,
+            time: document.getElementById('apptTime').value,
+            duration: document.getElementById('apptDuration').value,
+            location: document.getElementById('apptLocation').value.trim(),
+            notes: document.getElementById('apptNotes').value.trim(),
+            contactId: contactId || '',
+            contactName: contact ? contact.firstName + ' ' + contact.lastName : '',
+            updatedAt: new Date().toISOString()
+        };
+
+        if (id) {
+            const idx = appointments.findIndex(a => a.id === id);
+            if (idx !== -1) appointments[idx] = { ...appointments[idx], ...data };
+        } else {
+            data.id = Date.now().toString();
+            data.createdAt = new Date().toISOString();
+            appointments.push(data);
+        }
+
+        this.saveAppointments(appointments);
+        this.closeModal();
+        this.renderCalendar();
+
+        // Sync to connected calendars
+        const syncCal = document.getElementById('apptSyncCal').checked;
+        const sync = this.getSyncStatus();
+        if (syncCal && (sync.google || sync.outlook)) {
+            this.syncAppointmentToCalendar(data, sync);
+        }
+
+        this.toast(id ? 'Appointment updated' : 'Appointment created');
+    },
+
+    deleteAppointment(id) {
+        if (!confirm('Delete this appointment?')) return;
+        const appointments = this.getAppointments().filter(a => a.id !== id);
+        this.saveAppointments(appointments);
+        this.renderCalendar();
+        this.toast('Appointment deleted');
+    },
+
+    /* ============ CALENDAR SYNC ============ */
+    connectGoogle() {
+        const sync = this.getSyncStatus();
+        if (sync.google) {
+            sync.google = false;
+            this.saveSyncStatus(sync);
+            this.updateSyncUI();
+            this.toast('Google Calendar disconnected');
+            return;
+        }
+
+        // In production, this would redirect to Google OAuth2
+        // For now, simulate the connection flow
+        const confirmed = confirm(
+            'Connect to Google Calendar?\n\n' +
+            'In production, this will redirect you to Google to authorise access to your calendar.\n\n' +
+            'This allows the CRM to:\n' +
+            '• Create viewings & appointments in your Google Calendar\n' +
+            '• Sync appointment changes both ways\n' +
+            '• Send calendar invites to clients\n\n' +
+            'Click OK to simulate connecting.'
+        );
+
+        if (confirmed) {
+            sync.google = true;
+            sync.googleEmail = 'sharon@sharonmaxwell.co.nz';
+            sync.googleConnectedAt = new Date().toISOString();
+            this.saveSyncStatus(sync);
+            this.updateSyncUI();
+            this.toast('Google Calendar connected');
+        }
+    },
+
+    connectOutlook() {
+        const sync = this.getSyncStatus();
+        if (sync.outlook) {
+            sync.outlook = false;
+            this.saveSyncStatus(sync);
+            this.updateSyncUI();
+            this.toast('Outlook Calendar disconnected');
+            return;
+        }
+
+        const confirmed = confirm(
+            'Connect to Outlook Calendar?\n\n' +
+            'In production, this will redirect you to Microsoft to authorise access via Microsoft Graph API.\n\n' +
+            'This allows the CRM to:\n' +
+            '• Create viewings & appointments in your Outlook Calendar\n' +
+            '• Sync appointment changes both ways\n' +
+            '• Send calendar invites to clients\n\n' +
+            'Click OK to simulate connecting.'
+        );
+
+        if (confirmed) {
+            sync.outlook = true;
+            sync.outlookEmail = 'sharon@sharonmaxwell.co.nz';
+            sync.outlookConnectedAt = new Date().toISOString();
+            this.saveSyncStatus(sync);
+            this.updateSyncUI();
+            this.toast('Outlook Calendar connected');
+        }
+    },
+
+    updateSyncUI() {
+        const sync = this.getSyncStatus();
+        const dot = document.querySelector('.sync-dot');
+        const text = document.getElementById('syncStatusText');
+        const googleBtn = document.querySelector('.btn-google');
+        const outlookBtn = document.querySelector('.btn-outlook');
+
+        if (!dot || !text) return;
+
+        const connected = sync.google || sync.outlook;
+        dot.classList.toggle('connected', connected);
+
+        if (sync.google && sync.outlook) {
+            text.textContent = 'Connected to Google & Outlook';
+        } else if (sync.google) {
+            text.textContent = 'Connected to Google Calendar';
+        } else if (sync.outlook) {
+            text.textContent = 'Connected to Outlook';
+        } else {
+            text.textContent = 'Not connected';
+        }
+
+        if (googleBtn) {
+            googleBtn.classList.toggle('connected', sync.google);
+            googleBtn.innerHTML = sync.google
+                ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg> Disconnect Google'
+                : '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg> Sync with Google Calendar';
+        }
+        if (outlookBtn) {
+            outlookBtn.classList.toggle('connected', sync.outlook);
+            outlookBtn.innerHTML = sync.outlook
+                ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 7.387v10.478c0 .23-.08.424-.238.576a.806.806 0 01-.588.233h-8.174v-12.5h8.174c.229 0 .424.079.588.232.159.153.238.347.238.575v.406zM13.5 24L0 22.5V1.5L13.5 0v24zm-3.264-8.166c.697 0 1.266-.291 1.706-.873.441-.581.661-1.345.661-2.291 0-.964-.22-1.735-.661-2.313-.44-.577-1.009-.866-1.706-.866-.714 0-1.29.289-1.73.866-.44.578-.66 1.349-.66 2.313 0 .946.22 1.71.66 2.291.44.582 1.016.873 1.73.873zm-.036 1.478c-1.135 0-2.06-.415-2.776-1.244-.715-.829-1.073-1.891-1.073-3.188 0-1.33.365-2.404 1.094-3.222.73-.817 1.667-1.226 2.813-1.226 1.118 0 2.031.416 2.741 1.248.71.832 1.065 1.898 1.065 3.2 0 1.345-.362 2.417-1.086 3.216-.725.799-1.656 1.198-2.792 1.216h.014zM15 18.174h9V6.174h-9v12z"/></svg> Disconnect Outlook'
+                : '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 7.387v10.478c0 .23-.08.424-.238.576a.806.806 0 01-.588.233h-8.174v-12.5h8.174c.229 0 .424.079.588.232.159.153.238.347.238.575v.406zM13.5 24L0 22.5V1.5L13.5 0v24zm-3.264-8.166c.697 0 1.266-.291 1.706-.873.441-.581.661-1.345.661-2.291 0-.964-.22-1.735-.661-2.313-.44-.577-1.009-.866-1.706-.866-.714 0-1.29.289-1.73.866-.44.578-.66 1.349-.66 2.313 0 .946.22 1.71.66 2.291.44.582 1.016.873 1.73.873zm-.036 1.478c-1.135 0-2.06-.415-2.776-1.244-.715-.829-1.073-1.891-1.073-3.188 0-1.33.365-2.404 1.094-3.222.73-.817 1.667-1.226 2.813-1.226 1.118 0 2.031.416 2.741 1.248.71.832 1.065 1.898 1.065 3.2 0 1.345-.362 2.417-1.086 3.216-.725.799-1.656 1.198-2.792 1.216h.014zM15 18.174h9V6.174h-9v12z"/></svg> Sync with Outlook';
+        }
+    },
+
+    syncAppointmentToCalendar(appt, sync) {
+        // In production, this would make API calls to:
+        // Google: POST https://www.googleapis.com/calendar/v3/calendars/primary/events
+        // Outlook: POST https://graph.microsoft.com/v1.0/me/events
+        //
+        // The event payload would include:
+        // - summary/subject: appt.title
+        // - start/end datetime from appt.date + appt.time + appt.duration
+        // - location: appt.location
+        // - description: appt.notes
+        // - attendees: contact email if available
+
+        const targets = [];
+        if (sync.google) targets.push('Google Calendar');
+        if (sync.outlook) targets.push('Outlook');
+
+        console.log(`[CRM Sync] Syncing "${appt.title}" to: ${targets.join(', ')}`);
+        console.log('[CRM Sync] Event details:', {
+            title: appt.title,
+            date: appt.date,
+            time: appt.time,
+            duration: appt.duration + ' min',
+            location: appt.location
+        });
+
+        // Show sync confirmation
+        setTimeout(() => {
+            this.toast(`Synced to ${targets.join(' & ')}`);
+        }, 500);
+    },
+
+    formatTime(time) {
+        if (!time) return '';
+        const [h, m] = time.split(':');
+        const hour = parseInt(h);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const h12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+        return `${h12}:${m} ${ampm}`;
+    },
+
+    apptTypeName(type) {
+        const map = {
+            viewing: 'Viewing',
+            meeting: 'Meeting',
+            open_home: 'Open Home',
+            appraisal: 'Appraisal',
+            signing: 'Signing',
+            other: 'Other'
+        };
+        return map[type] || type;
     },
 
     /* ============ HELPERS ============ */

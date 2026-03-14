@@ -37,6 +37,9 @@
             <a href="#" class="nav-item" data-view="analytics">
                 <span class="nav-icon">◫</span> Analytics
             </a>
+            <a href="#" class="nav-item" data-view="calendar">
+                <span class="nav-icon">📅</span> Calendar
+            </a>
             <a href="#" class="nav-item" data-view="settings">
                 <span class="nav-icon">⚙</span> Settings
             </a>
@@ -209,6 +212,62 @@
                 <div class="card">
                     <div class="card-header"><h3>Conversion Metrics</h3></div>
                     <div class="card-body" id="conversionMetrics"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== CALENDAR VIEW ====== -->
+        <div class="view" id="view-calendar">
+            <div class="view-header">
+                <h1>Calendar &amp; Appointments</h1>
+                <button class="btn btn-primary" onclick="CRM.openAppointmentModal()">+ New Appointment</button>
+            </div>
+
+            <!-- Sync Buttons -->
+            <div class="calendar-sync-bar">
+                <div class="sync-status" id="syncStatus">
+                    <span class="sync-dot"></span>
+                    <span id="syncStatusText">Not connected</span>
+                </div>
+                <div class="sync-buttons">
+                    <button class="btn btn-google" onclick="CRM.connectGoogle()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
+                        Sync with Google Calendar
+                    </button>
+                    <button class="btn btn-outlook" onclick="CRM.connectOutlook()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 7.387v10.478c0 .23-.08.424-.238.576a.806.806 0 01-.588.233h-8.174v-12.5h8.174c.229 0 .424.079.588.232.159.153.238.347.238.575v.406zM13.5 24L0 22.5V1.5L13.5 0v24zm-3.264-8.166c.697 0 1.266-.291 1.706-.873.441-.581.661-1.345.661-2.291 0-.964-.22-1.735-.661-2.313-.44-.577-1.009-.866-1.706-.866-.714 0-1.29.289-1.73.866-.44.578-.66 1.349-.66 2.313 0 .946.22 1.71.66 2.291.44.582 1.016.873 1.73.873zm-.036 1.478c-1.135 0-2.06-.415-2.776-1.244-.715-.829-1.073-1.891-1.073-3.188 0-1.33.365-2.404 1.094-3.222.73-.817 1.667-1.226 2.813-1.226 1.118 0 2.031.416 2.741 1.248.71.832 1.065 1.898 1.065 3.2 0 1.345-.362 2.417-1.086 3.216-.725.799-1.656 1.198-2.792 1.216h.014zM15 18.174h9V6.174h-9v12z"/></svg>
+                        Sync with Outlook
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mini Calendar -->
+            <div class="calendar-layout">
+                <div class="calendar-mini">
+                    <div class="calendar-nav-header">
+                        <button class="btn btn-sm btn-secondary" onclick="CRM.calPrev()">←</button>
+                        <h3 id="calMonthTitle"></h3>
+                        <button class="btn btn-sm btn-secondary" onclick="CRM.calNext()">→</button>
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid"></div>
+                </div>
+
+                <!-- Day's Appointments -->
+                <div class="calendar-day-view">
+                    <h3 id="calDayTitle">Today's Appointments</h3>
+                    <div id="calDayAppointments">
+                        <p class="empty-state">No appointments for this day.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Appointments -->
+            <div class="card" style="margin-top: 20px;">
+                <div class="card-header">
+                    <h3>Upcoming Appointments</h3>
+                </div>
+                <div class="card-body" id="upcomingAppointments">
+                    <p class="empty-state">No upcoming appointments. Click "+ New Appointment" to schedule one.</p>
                 </div>
             </div>
         </div>
@@ -425,6 +484,79 @@
             <div class="modal-actions">
                 <button type="button" class="btn btn-secondary" onclick="CRM.closeModal()">Cancel</button>
                 <button type="submit" class="btn btn-primary">Save Activity</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div class="modal" id="appointmentModal">
+        <div class="modal-header">
+            <h2 id="appointmentModalTitle">New Appointment</h2>
+            <button class="modal-close" onclick="CRM.closeModal()">×</button>
+        </div>
+        <form id="appointmentModalForm" onsubmit="CRM.saveAppointment(event)">
+            <input type="hidden" id="appointmentId">
+            <div class="form-group">
+                <label>Title *</label>
+                <input type="text" id="apptTitle" required placeholder="e.g. Property viewing — 42 Marine Parade">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Type</label>
+                    <select id="apptType">
+                        <option value="viewing">Property Viewing</option>
+                        <option value="meeting">Client Meeting</option>
+                        <option value="open_home">Open Home</option>
+                        <option value="appraisal">Market Appraisal</option>
+                        <option value="signing">Contract Signing</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Contact</label>
+                    <select id="apptContact"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Date *</label>
+                    <input type="date" id="apptDate" required>
+                </div>
+                <div class="form-group">
+                    <label>Time *</label>
+                    <input type="time" id="apptTime" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Duration</label>
+                    <select id="apptDuration">
+                        <option value="15">15 minutes</option>
+                        <option value="30" selected>30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">1 hour</option>
+                        <option value="90">1.5 hours</option>
+                        <option value="120">2 hours</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" id="apptLocation" placeholder="Property address or meeting point">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="apptNotes" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+                <label style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" id="apptSyncCal" checked>
+                    Add to connected calendar (Google / Outlook)
+                </label>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="CRM.closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Appointment</button>
             </div>
         </form>
     </div>
