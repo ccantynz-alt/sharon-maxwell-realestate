@@ -4,6 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharon Maxwell & Kirk — Ray White Real Estate</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Sharon Maxwell & Kirk — award-winning Ray White real estate agents in Auckland. Specialising in luxury property sales across the Hibiscus Coast and North Shore.">
+    <meta name="keywords" content="luxury real estate, Auckland, Hibiscus Coast, North Shore, Ray White, property sales, premium homes, waterfront property, Sharon Maxwell, real estate agent, New Zealand property">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Sharon Maxwell & Kirk">
+    <link rel="canonical" href="https://sharonmaxwell.co.nz/">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#FED100">
+
+    <!-- Geo Meta Tags -->
+    <meta name="geo.region" content="NZ-AUK">
+    <meta name="geo.placename" content="Auckland">
+    <meta name="geo.position" content="-36.8485;174.7633">
+    <meta name="ICBM" content="-36.8485, 174.7633">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sharonmaxwell.co.nz/">
+    <meta property="og:title" content="Sharon Maxwell & Kirk — Ray White Real Estate">
+    <meta property="og:description" content="Award-winning Ray White real estate agents specialising in luxury property sales across Auckland's Hibiscus Coast and North Shore.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop">
+    <meta property="og:locale" content="en_NZ">
+    <meta property="og:site_name" content="Sharon Maxwell & Kirk — Ray White Real Estate">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sharon Maxwell & Kirk — Ray White Real Estate">
+    <meta name="twitter:description" content="Award-winning Ray White real estate agents specialising in luxury property sales across Auckland's Hibiscus Coast and North Shore.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Sharon Maxwell & Kirk",
+      "description": "Award-winning Ray White real estate agents specialising in luxury property sales across Auckland's Hibiscus Coast, North Shore, and greater Auckland region.",
+      "url": "https://sharonmaxwell.co.nz",
+      "telephone": "+64-21-555-0180",
+      "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "12 Hurstmere Road",
+        "addressLocality": "Takapuna",
+        "addressRegion": "Auckland",
+        "postalCode": "0622",
+        "addressCountry": "NZ"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Auckland"
+        },
+        {
+          "@type": "Place",
+          "name": "Hibiscus Coast"
+        },
+        {
+          "@type": "Place",
+          "name": "North Shore"
+        }
+      ],
+      "parentOrganization": {
+        "@type": "RealEstateAgent",
+        "name": "Ray White Real Estate",
+        "url": "https://www.raywhite.co.nz"
+      },
+      "knowsAbout": ["Luxury Real Estate", "Property Sales", "Property Appraisals", "Auckland Real Estate Market"],
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": 2
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -59,7 +136,7 @@
     </nav>
 
     <!-- ====== HERO SECTION ====== -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" aria-label="Hero image slideshow">
         <div class="hero-slider" id="heroSlider">
             <!-- Slide 1 — Luxury modern home at dusk -->
             <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80&auto=format&fit=crop');">
@@ -119,7 +196,7 @@
     </section>
 
     <!-- ====== STATS BAR ====== -->
-    <section class="stats-bar">
+    <section class="stats-bar" aria-label="Sales statistics">
         <div class="container stats-bar-inner">
             <div class="stat-item">
                 <span class="stat-number" data-target="350">0</span><span class="stat-suffix">+</span>
@@ -141,7 +218,7 @@
     </section>
 
     <!-- ====== FOR SALE — PROPERTY CAROUSEL ====== -->
-    <section class="listings" id="listings">
+    <section class="listings" id="listings" aria-label="Properties for sale">
         <div class="container">
             <div class="section-header">
                 <div>
@@ -163,7 +240,7 @@
 
                     <!-- Listing 1 — Waterfront -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="42 Marine Parade, Takapuna">
                             <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop" alt="Coastal Haven Estate, Takapuna" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -186,7 +263,7 @@
 
                     <!-- Listing 2 — Lifestyle -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="18 Vineyard Lane, Waiheke Island">
                             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop" alt="Vineyard Lane, Waiheke Island" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -209,7 +286,7 @@
 
                     <!-- Listing 3 — Urban penthouse -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="Level 32, Viaduct Tower">
                             <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&auto=format&fit=crop" alt="Viaduct Tower Penthouse" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -232,7 +309,7 @@
 
                     <!-- Listing 4 — Beachfront -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="8 Tamaki Drive, Mission Bay">
                             <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format&fit=crop" alt="Mission Bay property" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -255,7 +332,7 @@
 
                     <!-- Listing 5 — Country estate -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="156 Old North Road, Kumeu">
                             <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&auto=format&fit=crop" alt="Kumeu Country Manor" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -278,7 +355,7 @@
 
                     <!-- Listing 6 — Wine estate -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="25 Matakana Valley Road">
                             <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&auto=format&fit=crop" alt="Matakana Valley property" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -308,7 +385,7 @@
     </section>
 
     <!-- ====== SOLD SECTION ====== -->
-    <section class="sold-section" id="sold">
+    <section class="sold-section" id="sold" aria-label="Recently sold properties">
         <div class="container">
             <div class="section-header">
                 <div>
@@ -365,7 +442,7 @@
     </section>
 
     <!-- ====== WHY CHOOSE SHARON ====== -->
-    <section class="about" id="about">
+    <section class="about" id="about" aria-label="About Sharon Maxwell and Kirk">
         <div class="container">
             <div class="about-grid">
                 <div class="about-image">
@@ -414,7 +491,7 @@
     </section>
 
     <!-- ====== APPRAISAL CTA ====== -->
-    <section class="appraisal-cta" id="appraisal">
+    <section class="appraisal-cta" id="appraisal" aria-label="Free property appraisal">
         <div class="appraisal-bg" style="background-image: url('https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1920&q=80&auto=format&fit=crop');"></div>
         <div class="appraisal-overlay"></div>
         <div class="container appraisal-inner">
@@ -427,7 +504,7 @@
     </section>
 
     <!-- ====== TESTIMONIALS ====== -->
-    <section class="testimonials" id="testimonials">
+    <section class="testimonials" id="testimonials" aria-label="Client testimonials">
         <div class="container">
             <div class="section-header">
                 <div>
@@ -474,7 +551,7 @@
     </section>
 
     <!-- ====== CONTACT ====== -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" aria-label="Contact Sharon Maxwell and Kirk">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info">

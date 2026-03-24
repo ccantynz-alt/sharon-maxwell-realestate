@@ -334,12 +334,24 @@ ul { list-style: none; }
 .hero-slide.active {
     opacity: 1;
     z-index: 1;
-    animation: kenBurns 8s ease forwards;
 }
 
-@keyframes kenBurns {
-    0% { background-size: 100%; }
-    100% { background-size: 110%; }
+/* Ken Burns — each slide gets a different cinematic movement */
+.hero-slide:nth-child(1).active { animation: kenBurns1 8s ease forwards; }
+.hero-slide:nth-child(2).active { animation: kenBurns2 8s ease forwards; }
+.hero-slide:nth-child(3).active { animation: kenBurns3 8s ease forwards; }
+
+@keyframes kenBurns1 {
+    0%   { background-size: 100%; background-position: center; }
+    100% { background-size: 115%; background-position: 30% 60%; }
+}
+@keyframes kenBurns2 {
+    0%   { background-size: 115%; background-position: 70% 40%; }
+    100% { background-size: 105%; background-position: center; }
+}
+@keyframes kenBurns3 {
+    0%   { background-size: 100%; background-position: 40% center; }
+    100% { background-size: 112%; background-position: 60% 40%; }
 }
 
 .hero-slide-overlay {
@@ -355,6 +367,18 @@ ul { list-style: none; }
     transform: translateY(-50%);
     z-index: 2;
     max-width: 600px;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.3s, transform 0.8s ease 0.3s;
+}
+
+.hero-slide.active .hero-slide-content {
+    opacity: 1;
+    animation: heroTextIn 0.9s ease 0.2s both;
+}
+
+@keyframes heroTextIn {
+    0%   { opacity: 0; transform: translateY(-50%) translateX(-30px); }
+    100% { opacity: 1; transform: translateY(-50%) translateX(0); }
 }
 
 .hero-accent-line {
@@ -1196,6 +1220,201 @@ ul { list-style: none; }
 .reveal.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* ============================================
+   STAGGERED REVEAL ANIMATIONS
+   ============================================ */
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+.reveal-scale {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ============================================
+   PROPERTY IMAGE LIGHTBOX
+   ============================================ */
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    cursor: zoom-out;
+    backdrop-filter: blur(10px);
+}
+.lightbox-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    max-width: 90vw;
+    max-height: 85vh;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.lightbox-overlay.open .lightbox-content {
+    transform: scale(1);
+}
+
+.lightbox-content img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6);
+}
+
+.lightbox-caption {
+    position: absolute;
+    bottom: -48px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255,255,255,0.8);
+    font-family: var(--font-display);
+    font-size: 18px;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+}
+.lightbox-close:hover {
+    background: var(--rw-yellow);
+    border-color: var(--rw-yellow);
+    color: var(--charcoal);
+}
+
+/* Make listing images clickable for lightbox */
+.listing-image {
+    cursor: zoom-in;
+}
+
+/* ============================================
+   PARALLAX SECTIONS
+   ============================================ */
+.appraisal-bg {
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+/* ============================================
+   ENHANCED LISTING CARD HOVER
+   ============================================ */
+.listing-card {
+    border: 1px solid transparent;
+}
+.listing-card:hover {
+    border-color: var(--rw-yellow);
+}
+
+.listing-body {
+    position: relative;
+}
+
+/* Gold accent line slides in on hover */
+.listing-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rw-yellow), var(--rw-yellow-hover));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.listing-card:hover::after {
+    transform: scaleX(1);
+}
+
+/* ============================================
+   SHIMMER ACCENT ON SECTION HEADERS
+   ============================================ */
+.section-title {
+    position: relative;
+    display: inline-block;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: var(--rw-yellow);
+    margin-top: 12px;
+    transition: width 0.5s ease;
+}
+.section-header:hover .section-title::after,
+.section-title:hover::after {
+    width: 120px;
+}
+
+/* ============================================
+   GLASSMORPHISM ON TESTIMONIAL HOVER
+   ============================================ */
+.testimonial-card:hover {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    border-color: rgba(254, 209, 0, 0.3);
+}
+
+/* ============================================
+   SMOOTH SECTION TRANSITIONS
+   ============================================ */
+section {
+    position: relative;
+}
+
+/* Gold divider between sections */
+.listings::before,
+.about::before,
+.testimonials::before,
+.contact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--rw-yellow);
 }
 
 /* ============================================
