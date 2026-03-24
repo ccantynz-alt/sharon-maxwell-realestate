@@ -146,7 +146,7 @@ function renderListingCard(p) {
     };
 
     const statusBadge = p.status === 'under_offer' ? 'Under Offer' : 'For Sale';
-    const price = p.price ? formatPrice(p.price) : 'By Negotiation';
+    const price = p.priceDisplay || (p.price ? formatPrice(p.price) : 'By Negotiation');
 
     // Pick a property image based on category or use a default
     const images = {
@@ -167,10 +167,11 @@ function renderListingCard(p) {
             </div>
             <div class="listing-body">
                 <h3 class="listing-address">${esc(p.address)}</h3>
-                <p class="listing-suburb">${esc(p.category ? capitalise(p.category) : '')}</p>
+                <p class="listing-suburb">${esc(p.suburb || (p.category ? capitalise(p.category) : ''))}</p>
                 <div class="listing-features">
                     ${p.beds ? `<span><strong>${esc(String(p.beds))}</strong> Bed</span>` : ''}
                     ${p.baths ? `<span><strong>${esc(String(p.baths))}</strong> Bath</span>` : ''}
+                    ${p.cars ? `<span><strong>${esc(String(p.cars))}</strong> Car</span>` : ''}
                     ${p.area ? `<span><strong>${esc(String(p.area))}</strong>m²</span>` : ''}
                 </div>
                 <div class="listing-footer">
