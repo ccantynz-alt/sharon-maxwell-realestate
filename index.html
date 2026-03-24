@@ -514,20 +514,20 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" required>
+                            <input type="text" id="firstName" name="firstName" required maxlength="100">
                         </div>
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" required>
+                            <input type="text" id="lastName" name="lastName" required maxlength="100">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required maxlength="254">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
+                        <input type="tel" id="phone" name="phone" maxlength="20" pattern="[0-9+\-\s()]*">
                     </div>
                     <div class="form-group">
                         <label for="interest">I'm Interested In</label>
@@ -542,7 +542,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="4"></textarea>
+                        <textarea id="message" name="message" rows="4" maxlength="2000"></textarea>
                     </div>
                     <button type="submit" class="btn btn-yellow btn-full">Send Enquiry</button>
                 </form>

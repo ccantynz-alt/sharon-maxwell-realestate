@@ -53,6 +53,10 @@ const CRM = {
     },
 
     switchView(view) {
+        // Only allow known view names to prevent DOM manipulation
+        const allowedViews = ['dashboard', 'contacts', 'pipeline', 'properties', 'activities', 'analytics', 'calendar', 'settings'];
+        if (!allowedViews.includes(view)) return;
+
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
@@ -249,8 +253,8 @@ const CRM = {
                     <td>${this.timeAgo(c.updatedAt)}</td>
                     <td>
                         <div class="action-btns">
-                            <button class="btn btn-sm btn-secondary" onclick="CRM.editContact('${c.id}')">Edit</button>
-                            <button class="btn btn-sm btn-danger" onclick="CRM.deleteContact('${c.id}')">Del</button>
+                            <button class="btn btn-sm btn-secondary" onclick="CRM.editContact('${this.safeId(c.id)}')">Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="CRM.deleteContact('${this.safeId(c.id)}')">Del</button>
                         </div>
                     </td>
                 </tr>
@@ -369,8 +373,8 @@ const CRM = {
                             <div class="pipeline-card-name">${this.esc(c.firstName)} ${this.esc(c.lastName)}</div>
                             ${c.dealValue ? `<div class="pipeline-card-value">${this.formatCurrency(c.dealValue)}</div>` : ''}
                             <div class="pipeline-card-actions">
-                                ${stage.key !== 'lead' ? `<button onclick="CRM.moveStage('${c.id}','back')">← Back</button>` : ''}
-                                ${stage.key !== 'closed_won' ? `<button onclick="CRM.moveStage('${c.id}','forward')">Forward →</button>` : ''}
+                                ${stage.key !== 'lead' ? `<button onclick="CRM.moveStage('${this.safeId(c.id)}','back')">← Back</button>` : ''}
+                                ${stage.key !== 'closed_won' ? `<button onclick="CRM.moveStage('${this.safeId(c.id)}','forward')">Forward →</button>` : ''}
                             </div>
                         </div>
                     `).join('')}
@@ -421,8 +425,8 @@ const CRM = {
                     <div class="property-crm-detail"><span>Status</span><span>${this.propertyStatus(p.status)}</span></div>
                 </div>
                 <div class="property-crm-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="CRM.editProperty('${p.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteProperty('${p.id}')">Delete</button>
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editProperty('${this.safeId(p.id)}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteProperty('${this.safeId(p.id)}')">Delete</button>
                 </div>
             </div>
         `).join('');
@@ -529,7 +533,7 @@ const CRM = {
         const select = document.getElementById('amContact');
         const contacts = this.getContacts();
         select.innerHTML = '<option value="">— No contact —</option>' +
-            contacts.map(c => `<option value="${c.id}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
+            contacts.map(c => `<option value="${this.safeId(c.id)}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
 
         this.openModal('activityModal');
     },
@@ -749,9 +753,15 @@ const CRM = {
         reader.onload = (e) => {
             try {
                 const data = JSON.parse(e.target.result);
-                if (data.contacts) this.saveContacts(data.contacts);
-                if (data.properties) this.saveProperties(data.properties);
-                if (data.activities) this.saveActivities(data.activities);
+                // Sanitise imported data — ensure IDs are safe and strings are trimmed
+                const sanitiseRecord = (r) => {
+                    if (!r || typeof r !== 'object') return null;
+                    if (r.id) r.id = this.safeId(r.id) || Date.now().toString();
+                    return r;
+                };
+                if (Array.isArray(data.contacts)) this.saveContacts(data.contacts.map(sanitiseRecord).filter(Boolean));
+                if (Array.isArray(data.properties)) this.saveProperties(data.properties.map(sanitiseRecord).filter(Boolean));
+                if (Array.isArray(data.activities)) this.saveActivities(data.activities.map(sanitiseRecord).filter(Boolean));
                 this.updateDashboard();
                 this.renderContacts();
                 this.toast('JSON backup restored');
@@ -930,8 +940,8 @@ const CRM = {
                     </div>
                 </div>
                 <div class="appt-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${a.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${a.id}')">Del</button>
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${this.safeId(a.id)}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${this.safeId(a.id)}')">Del</button>
                 </div>
             </div>
         `).join('');
@@ -964,8 +974,8 @@ const CRM = {
                     </div>
                 </div>
                 <div class="appt-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${a.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${a.id}')">Del</button>
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${this.safeId(a.id)}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${this.safeId(a.id)}')">Del</button>
                 </div>
             </div>
         `).join('');
@@ -983,7 +993,7 @@ const CRM = {
         const select = document.getElementById('apptContact');
         const contacts = this.getContacts();
         select.innerHTML = '<option value="">— No contact —</option>' +
-            contacts.map(c => `<option value="${c.id}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
+            contacts.map(c => `<option value="${this.safeId(c.id)}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
 
         if (id) {
             const a = this.getAppointments().find(x => x.id === id);
@@ -1219,6 +1229,12 @@ const CRM = {
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
+    },
+
+    /** Sanitise an ID for safe use in HTML attribute contexts (onclick, etc.) */
+    safeId(id) {
+        if (!id) return '';
+        return String(id).replace(/[^a-zA-Z0-9_\-]/g, '');
     }
 };
 
