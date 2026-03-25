@@ -1,16 +1,21 @@
 /* ============================================
    SHARON MAXWELL — RAY WHITE — MAIN JS
-   Hero slider, property carousel, animations
+   Hero slider, dynamic property feed, lightbox,
+   parallax, carousel, animations
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
     initNav();
     initHeroSlider();
+    loadDynamicListings();
     initPropertyCarousel();
     initStats();
     initFavourites();
     initScrollReveal();
     initContactForm();
+    initLightbox();
+    initParallax();
+    initServicesSlider();
 });
 
 /* ============ NAVIGATION ============ */
@@ -96,6 +101,125 @@ function initHeroSlider() {
     }
 
     startAuto();
+}
+
+/* ============================================================
+   DYNAMIC PROPERTY FEED — pulls from CRM localStorage
+   If CRM has properties, they replace the hardcoded cards.
+   If no CRM data, the hardcoded HTML stays as-is.
+   ============================================================ */
+function loadDynamicListings() {
+    const track = document.getElementById('listingsTrack');
+    if (!track) return;
+
+    const properties = JSON.parse(localStorage.getItem('maxwell_crm_properties') || '[]');
+
+    // Only replace if CRM has properties
+    if (properties.length === 0) return;
+
+    // Filter to available/under_offer properties (not sold)
+    const forSale = properties.filter(p => p.status !== 'sold');
+    const sold = properties.filter(p => p.status === 'sold');
+
+    // Render For Sale carousel
+    if (forSale.length > 0) {
+        track.innerHTML = forSale.map(p => renderListingCard(p)).join('');
+    }
+
+    // Render Sold grid if we have sold properties
+    if (sold.length > 0) {
+        const soldGrid = document.querySelector('.sold-grid');
+        if (soldGrid) {
+            soldGrid.innerHTML = sold.map(p => renderSoldCard(p)).join('');
+        }
+    }
+
+    // Re-init favourites for new cards
+    initFavourites();
+}
+
+function renderListingCard(p) {
+    const esc = s => {
+        if (!s) return '';
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+    };
+
+    const statusBadge = p.status === 'under_offer' ? 'Under Offer' : 'For Sale';
+    const price = p.priceDisplay || (p.price ? formatPrice(p.price) : 'By Negotiation');
+
+    // Pick a property image based on category or use a default
+    const images = {
+        waterfront: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop',
+        lifestyle: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop',
+        urban: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&auto=format&fit=crop',
+        rural: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&auto=format&fit=crop',
+        residential: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format&fit=crop'
+    };
+    const imgUrl = p.imageUrl || images[p.category] || images.residential;
+
+    return `
+        <div class="listing-card">
+            <div class="listing-image" data-lightbox-src="${esc(imgUrl)}" data-lightbox-caption="${esc(p.address)}">
+                <img src="${esc(imgUrl)}" alt="${esc(p.address)}" loading="lazy">
+                <span class="listing-badge">${esc(statusBadge)}</span>
+                <button class="listing-save" aria-label="Save">♡</button>
+            </div>
+            <div class="listing-body">
+                <h3 class="listing-address">${esc(p.address)}</h3>
+                <p class="listing-suburb">${esc(p.suburb || (p.category ? capitalise(p.category) : ''))}</p>
+                <div class="listing-features">
+                    ${p.beds ? `<span><strong>${esc(String(p.beds))}</strong> Bed</span>` : ''}
+                    ${p.baths ? `<span><strong>${esc(String(p.baths))}</strong> Bath</span>` : ''}
+                    ${p.cars ? `<span><strong>${esc(String(p.cars))}</strong> Car</span>` : ''}
+                    ${p.area ? `<span><strong>${esc(String(p.area))}</strong>m²</span>` : ''}
+                </div>
+                <div class="listing-footer">
+                    <span class="listing-price">${esc(price)}</span>
+                    <a href="#contact" class="listing-enquire">Enquire →</a>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function renderSoldCard(p) {
+    const esc = s => {
+        if (!s) return '';
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+    };
+
+    const imgUrl = p.imageUrl || 'https://images.unsplash.com/photo-1600573472592-401b489a3cdc?w=600&q=80&auto=format&fit=crop';
+    const details = [
+        p.beds ? p.beds + ' Bed' : '',
+        p.baths ? p.baths + ' Bath' : '',
+    ].filter(Boolean).join(' · ');
+
+    return `
+        <div class="sold-card">
+            <div class="sold-image">
+                <img src="${esc(imgUrl)}" alt="${esc(p.address)}" loading="lazy">
+                <div class="sold-banner">SOLD</div>
+            </div>
+            <div class="sold-body">
+                <h3>${esc(p.address)}</h3>
+                ${details ? `<p class="sold-detail">${esc(details)}</p>` : ''}
+            </div>
+        </div>
+    `;
+}
+
+function formatPrice(n) {
+    if (!n) return 'By Negotiation';
+    return '$' + Number(n).toLocaleString('en-NZ');
+}
+
+function capitalise(s) {
+    if (!s) return '';
+    return s.charAt(0).toUpperCase() + s.slice(1).replace(/_/g, ' ');
 }
 
 /* ============ PROPERTY CAROUSEL ============ */
@@ -194,16 +318,17 @@ function initFavourites() {
     document.querySelectorAll('.listing-save').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             btn.classList.toggle('active');
             btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
         });
     });
 }
 
-/* ============ SCROLL REVEAL ============ */
+/* ============ SCROLL REVEAL with stagger ============ */
 function initScrollReveal() {
     const elements = document.querySelectorAll(
-        '.listing-card, .sold-card, .testimonial-card, .about-grid, .contact-grid, .section-header, .stat-item, .highlight, .appraisal-inner'
+        '.listing-card, .sold-card, .testimonial-card, .about-grid, .contact-grid, .section-header, .stat-item, .highlight, .appraisal-inner, .service-slide-content'
     );
 
     const observer = new IntersectionObserver((entries) => {
@@ -212,7 +337,7 @@ function initScrollReveal() {
                 // Stagger animation
                 setTimeout(() => {
                     entry.target.classList.add('visible');
-                }, i * 80);
+                }, i * 100);
                 observer.unobserve(entry.target);
             }
         });
@@ -271,4 +396,169 @@ function initContactForm() {
             btn.disabled = false;
         }, 3000);
     });
+}
+
+/* ============================================================
+   FULL-SCREEN LIGHTBOX — click any property image to expand
+   ============================================================ */
+function initLightbox() {
+    // Create lightbox DOM
+    const overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = `
+        <button class="lightbox-close" aria-label="Close lightbox">×</button>
+        <div class="lightbox-content">
+            <img src="" alt="">
+            <div class="lightbox-caption"></div>
+        </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const img = overlay.querySelector('img');
+    const caption = overlay.querySelector('.lightbox-caption');
+
+    function open(src, captionText) {
+        img.src = src;
+        img.alt = captionText || '';
+        caption.textContent = captionText || '';
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Close on overlay click, close button, or Escape
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('lightbox-close')) {
+            close();
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+    });
+
+    // Attach to all listing images (including dynamically added ones)
+    document.addEventListener('click', (e) => {
+        const imageWrap = e.target.closest('.listing-image');
+        if (imageWrap && !e.target.closest('.listing-save') && !e.target.closest('.listing-badge')) {
+            const src = imageWrap.dataset.lightboxSrc || imageWrap.querySelector('img')?.src;
+            const cap = imageWrap.dataset.lightboxCaption || imageWrap.querySelector('img')?.alt;
+            if (src) open(src, cap);
+        }
+    });
+}
+
+/* ============================================================
+   PARALLAX — subtle depth effect on the appraisal section
+   ============================================================ */
+function initParallax() {
+    const parallaxBg = document.querySelector('.appraisal-bg');
+    if (!parallaxBg) return;
+
+    // Only on desktop (reduce motion / mobile perf)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || window.innerWidth < 768) return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const rect = parallaxBg.parentElement.getBoundingClientRect();
+                const vh = window.innerHeight;
+                if (rect.top < vh && rect.bottom > 0) {
+                    const progress = (vh - rect.top) / (vh + rect.height);
+                    const offset = (progress - 0.5) * 60;
+                    parallaxBg.style.transform = `translateY(${offset}px) scale(1.1)`;
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}
+
+/* ============ SERVICES SHOWCASE SLIDER ============ */
+function initServicesSlider() {
+    const track = document.getElementById('servicesTrack');
+    const dotsContainer = document.getElementById('servicesDots');
+    const prevBtn = document.getElementById('servicesPrev');
+    const nextBtn = document.getElementById('servicesNext');
+    const progressBar = document.getElementById('servicesProgress');
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.service-slide');
+    let current = 0;
+    let interval;
+    const SLIDE_DURATION = 8000;
+
+    // Create dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'services-dot' + (i === 0 ? ' active' : '');
+        dot.dataset.slide = i;
+        dot.setAttribute('aria-label', 'Go to service ' + (i + 1));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = dotsContainer.querySelectorAll('.services-dot');
+
+    // Set first slide active
+    slides[0].classList.add('active');
+
+    function goTo(idx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (idx + slides.length) % slides.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        resetProgress();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function resetProgress() {
+        if (!progressBar) return;
+        progressBar.classList.remove('animate');
+        progressBar.style.width = '0%';
+        void progressBar.offsetWidth;
+        progressBar.classList.add('animate');
+    }
+
+    function startAuto() {
+        resetProgress();
+        interval = setInterval(next, SLIDE_DURATION);
+    }
+
+    function resetAuto() {
+        clearInterval(interval);
+        startAuto();
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAuto(); });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            goTo(parseInt(dot.dataset.slide));
+            resetAuto();
+        });
+    });
+
+    // Touch support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            diff > 0 ? next() : prev();
+            resetAuto();
+        }
+    }, { passive: true });
+
+    startAuto();
 }

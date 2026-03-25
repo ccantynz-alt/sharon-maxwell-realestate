@@ -1,0 +1,8 @@
+# robots.txt — Sharon Maxwell & Kirk, Ray White Real Estate
+# https://sharonmaxwell.co.nz
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://sharonmaxwell.co.nz/sitemap.xml

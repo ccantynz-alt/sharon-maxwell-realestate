@@ -53,6 +53,10 @@ const CRM = {
     },
 
     switchView(view) {
+        // Only allow known view names to prevent DOM manipulation
+        const allowedViews = ['dashboard', 'contacts', 'pipeline', 'properties', 'activities', 'analytics', 'calendar', 'settings'];
+        if (!allowedViews.includes(view)) return;
+
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
@@ -249,8 +253,8 @@ const CRM = {
                     <td>${this.timeAgo(c.updatedAt)}</td>
                     <td>
                         <div class="action-btns">
-                            <button class="btn btn-sm btn-secondary" onclick="CRM.editContact('${c.id}')">Edit</button>
-                            <button class="btn btn-sm btn-danger" onclick="CRM.deleteContact('${c.id}')">Del</button>
+                            <button class="btn btn-sm btn-secondary" onclick="CRM.editContact('${this.safeId(c.id)}')">Edit</button>
+                            <button class="btn btn-sm btn-danger" onclick="CRM.deleteContact('${this.safeId(c.id)}')">Del</button>
                         </div>
                     </td>
                 </tr>
@@ -369,8 +373,8 @@ const CRM = {
                             <div class="pipeline-card-name">${this.esc(c.firstName)} ${this.esc(c.lastName)}</div>
                             ${c.dealValue ? `<div class="pipeline-card-value">${this.formatCurrency(c.dealValue)}</div>` : ''}
                             <div class="pipeline-card-actions">
-                                ${stage.key !== 'lead' ? `<button onclick="CRM.moveStage('${c.id}','back')">← Back</button>` : ''}
-                                ${stage.key !== 'closed_won' ? `<button onclick="CRM.moveStage('${c.id}','forward')">Forward →</button>` : ''}
+                                ${stage.key !== 'lead' ? `<button onclick="CRM.moveStage('${this.safeId(c.id)}','back')">← Back</button>` : ''}
+                                ${stage.key !== 'closed_won' ? `<button onclick="CRM.moveStage('${this.safeId(c.id)}','forward')">Forward →</button>` : ''}
                             </div>
                         </div>
                     `).join('')}
@@ -414,15 +418,17 @@ const CRM = {
                     <span>${this.esc(p.category || 'Residential')}</span>
                 </div>
                 <div class="property-crm-body">
-                    <div class="property-crm-detail"><span>Price</span><span>${this.formatCurrency(p.price)}</span></div>
+                    <div class="property-crm-detail"><span>Price</span><span>${p.priceDisplay ? this.esc(p.priceDisplay) : this.formatCurrency(p.price)}</span></div>
                     <div class="property-crm-detail"><span>Bedrooms</span><span>${p.beds || '—'}</span></div>
                     <div class="property-crm-detail"><span>Bathrooms</span><span>${p.baths || '—'}</span></div>
+                    ${p.cars ? `<div class="property-crm-detail"><span>Car Parks</span><span>${p.cars}</span></div>` : ''}
                     <div class="property-crm-detail"><span>Area</span><span>${p.area ? p.area + 'm²' : '—'}</span></div>
+                    ${p.suburb ? `<div class="property-crm-detail"><span>Suburb</span><span>${this.esc(p.suburb)}</span></div>` : ''}
                     <div class="property-crm-detail"><span>Status</span><span>${this.propertyStatus(p.status)}</span></div>
                 </div>
                 <div class="property-crm-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="CRM.editProperty('${p.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteProperty('${p.id}')">Delete</button>
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editProperty('${this.safeId(p.id)}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteProperty('${this.safeId(p.id)}')">Delete</button>
                 </div>
             </div>
         `).join('');
@@ -438,12 +444,16 @@ const CRM = {
             if (p) {
                 document.getElementById('propertyId').value = p.id;
                 document.getElementById('pmAddress').value = p.address || '';
+                document.getElementById('pmSuburb').value = p.suburb || '';
                 document.getElementById('pmCategory').value = p.category || 'residential';
                 document.getElementById('pmStatus').value = p.status || 'available';
                 document.getElementById('pmPrice').value = p.price || '';
+                document.getElementById('pmPriceDisplay').value = p.priceDisplay || '';
                 document.getElementById('pmBeds').value = p.beds || '';
                 document.getElementById('pmBaths').value = p.baths || '';
+                document.getElementById('pmCars').value = p.cars || '';
                 document.getElementById('pmArea').value = p.area || '';
+                document.getElementById('pmImageUrl').value = p.imageUrl || '';
                 document.getElementById('pmDescription').value = p.description || '';
             }
         }
@@ -459,12 +469,16 @@ const CRM = {
         const id = document.getElementById('propertyId').value;
         const data = {
             address: document.getElementById('pmAddress').value.trim(),
+            suburb: document.getElementById('pmSuburb').value.trim(),
             category: document.getElementById('pmCategory').value,
             status: document.getElementById('pmStatus').value,
             price: document.getElementById('pmPrice').value,
+            priceDisplay: document.getElementById('pmPriceDisplay').value.trim(),
             beds: document.getElementById('pmBeds').value,
             baths: document.getElementById('pmBaths').value,
+            cars: document.getElementById('pmCars').value,
             area: document.getElementById('pmArea').value,
+            imageUrl: document.getElementById('pmImageUrl').value.trim(),
             description: document.getElementById('pmDescription').value.trim(),
             updatedAt: new Date().toISOString()
         };
@@ -529,7 +543,7 @@ const CRM = {
         const select = document.getElementById('amContact');
         const contacts = this.getContacts();
         select.innerHTML = '<option value="">— No contact —</option>' +
-            contacts.map(c => `<option value="${c.id}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
+            contacts.map(c => `<option value="${this.safeId(c.id)}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
 
         this.openModal('activityModal');
     },
@@ -749,9 +763,15 @@ const CRM = {
         reader.onload = (e) => {
             try {
                 const data = JSON.parse(e.target.result);
-                if (data.contacts) this.saveContacts(data.contacts);
-                if (data.properties) this.saveProperties(data.properties);
-                if (data.activities) this.saveActivities(data.activities);
+                // Sanitise imported data — ensure IDs are safe and strings are trimmed
+                const sanitiseRecord = (r) => {
+                    if (!r || typeof r !== 'object') return null;
+                    if (r.id) r.id = this.safeId(r.id) || Date.now().toString();
+                    return r;
+                };
+                if (Array.isArray(data.contacts)) this.saveContacts(data.contacts.map(sanitiseRecord).filter(Boolean));
+                if (Array.isArray(data.properties)) this.saveProperties(data.properties.map(sanitiseRecord).filter(Boolean));
+                if (Array.isArray(data.activities)) this.saveActivities(data.activities.map(sanitiseRecord).filter(Boolean));
                 this.updateDashboard();
                 this.renderContacts();
                 this.toast('JSON backup restored');
@@ -789,10 +809,10 @@ const CRM = {
         ];
 
         const demoProperties = [
-            { id: 'p1', address: '42 Marine Parade, Takapuna', category: 'waterfront', status: 'available', price: 6450000, beds: 5, baths: 4, area: 680, description: 'Stunning waterfront estate with panoramic harbour views', createdAt: '2026-01-01T00:00:00Z', updatedAt: '2026-03-01T00:00:00Z' },
-            { id: 'p2', address: '18 Vineyard Lane, Waiheke Island', category: 'lifestyle', status: 'sold', price: 8900000, beds: 4, baths: 3, area: 24000, description: 'Premier vineyard estate with established vines', createdAt: '2025-11-01T00:00:00Z', updatedAt: '2026-01-20T00:00:00Z' },
-            { id: 'p3', address: 'Level 32, Viaduct Tower, Auckland CBD', category: 'urban', status: 'under_offer', price: 4800000, beds: 3, baths: 2, area: 240, description: 'Luxury penthouse with 360° city and harbour views', createdAt: '2026-02-01T00:00:00Z', updatedAt: '2026-03-10T00:00:00Z' },
-            { id: 'p4', address: '156 Old North Road, Kumeu', category: 'rural', status: 'available', price: 5600000, beds: 7, baths: 5, area: 52000, description: 'Grand country manor on 5.2 hectares', createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-03-05T00:00:00Z' }
+            { id: 'p1', address: '42 Marine Parade, Takapuna', suburb: 'Takapuna, North Shore', category: 'waterfront', status: 'available', price: 6450000, priceDisplay: 'By Negotiation', beds: 5, baths: 4, cars: 3, area: 680, imageUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop', description: 'Stunning waterfront estate with panoramic harbour views', createdAt: '2026-01-01T00:00:00Z', updatedAt: '2026-03-01T00:00:00Z' },
+            { id: 'p2', address: '18 Vineyard Lane, Waiheke Island', suburb: 'Waiheke Island', category: 'lifestyle', status: 'sold', price: 8900000, priceDisplay: '', beds: 4, baths: 3, cars: 2, area: 24000, imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop', description: 'Premier vineyard estate with established vines', createdAt: '2025-11-01T00:00:00Z', updatedAt: '2026-01-20T00:00:00Z' },
+            { id: 'p3', address: 'Level 32, Viaduct Tower, Auckland CBD', suburb: 'Viaduct Harbour, Auckland CBD', category: 'urban', status: 'under_offer', price: 4800000, priceDisplay: '$4,800,000', beds: 3, baths: 2, cars: 2, area: 240, imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&auto=format&fit=crop', description: 'Luxury penthouse with 360° city and harbour views', createdAt: '2026-02-01T00:00:00Z', updatedAt: '2026-03-10T00:00:00Z' },
+            { id: 'p4', address: '156 Old North Road, Kumeu', suburb: 'Kumeu, West Auckland', category: 'rural', status: 'available', price: 5600000, priceDisplay: 'Deadline Sale', beds: 7, baths: 5, cars: 6, area: 52000, imageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&auto=format&fit=crop', description: 'Grand country manor on 5.2 hectares', createdAt: '2026-01-15T00:00:00Z', updatedAt: '2026-03-05T00:00:00Z' }
         ];
 
         this.saveContacts(demoContacts);
@@ -930,8 +950,8 @@ const CRM = {
                     </div>
                 </div>
                 <div class="appt-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${a.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${a.id}')">Del</button>
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${this.safeId(a.id)}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${this.safeId(a.id)}')">Del</button>
                 </div>
             </div>
         `).join('');
@@ -964,8 +984,8 @@ const CRM = {
                     </div>
                 </div>
                 <div class="appt-actions">
-                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${a.id}')">Edit</button>
-                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${a.id}')">Del</button>
+                    <button class="btn btn-sm btn-secondary" onclick="CRM.editAppointment('${this.safeId(a.id)}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="CRM.deleteAppointment('${this.safeId(a.id)}')">Del</button>
                 </div>
             </div>
         `).join('');
@@ -983,7 +1003,7 @@ const CRM = {
         const select = document.getElementById('apptContact');
         const contacts = this.getContacts();
         select.innerHTML = '<option value="">— No contact —</option>' +
-            contacts.map(c => `<option value="${c.id}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
+            contacts.map(c => `<option value="${this.safeId(c.id)}">${this.esc(c.firstName)} ${this.esc(c.lastName)}</option>`).join('');
 
         if (id) {
             const a = this.getAppointments().find(x => x.id === id);
@@ -1219,6 +1239,12 @@ const CRM = {
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
+    },
+
+    /** Sanitise an ID for safe use in HTML attribute contexts (onclick, etc.) */
+    safeId(id) {
+        if (!id) return '';
+        return String(id).replace(/[^a-zA-Z0-9_\-]/g, '');
     }
 };
 

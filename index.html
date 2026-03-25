@@ -4,6 +4,83 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sharon Maxwell & Kirk — Ray White Real Estate</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Sharon Maxwell & Kirk — award-winning Ray White real estate agents in Auckland. Specialising in luxury property sales across the Hibiscus Coast and North Shore.">
+    <meta name="keywords" content="luxury real estate, Auckland, Hibiscus Coast, North Shore, Ray White, property sales, premium homes, waterfront property, Sharon Maxwell, real estate agent, New Zealand property">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Sharon Maxwell & Kirk">
+    <link rel="canonical" href="https://sharonmaxwell.co.nz/">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#FED100">
+
+    <!-- Geo Meta Tags -->
+    <meta name="geo.region" content="NZ-AUK">
+    <meta name="geo.placename" content="Auckland">
+    <meta name="geo.position" content="-36.8485;174.7633">
+    <meta name="ICBM" content="-36.8485, 174.7633">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sharonmaxwell.co.nz/">
+    <meta property="og:title" content="Sharon Maxwell & Kirk — Ray White Real Estate">
+    <meta property="og:description" content="Award-winning Ray White real estate agents specialising in luxury property sales across Auckland's Hibiscus Coast and North Shore.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop">
+    <meta property="og:locale" content="en_NZ">
+    <meta property="og:site_name" content="Sharon Maxwell & Kirk — Ray White Real Estate">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sharon Maxwell & Kirk — Ray White Real Estate">
+    <meta name="twitter:description" content="Award-winning Ray White real estate agents specialising in luxury property sales across Auckland's Hibiscus Coast and North Shore.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "RealEstateAgent",
+      "name": "Sharon Maxwell & Kirk",
+      "description": "Award-winning Ray White real estate agents specialising in luxury property sales across Auckland's Hibiscus Coast, North Shore, and greater Auckland region.",
+      "url": "https://sharonmaxwell.co.nz",
+      "telephone": "+64-21-555-0180",
+      "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&auto=format&fit=crop",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "12 Hurstmere Road",
+        "addressLocality": "Takapuna",
+        "addressRegion": "Auckland",
+        "postalCode": "0622",
+        "addressCountry": "NZ"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Auckland"
+        },
+        {
+          "@type": "Place",
+          "name": "Hibiscus Coast"
+        },
+        {
+          "@type": "Place",
+          "name": "North Shore"
+        }
+      ],
+      "parentOrganization": {
+        "@type": "RealEstateAgent",
+        "name": "Ray White Real Estate",
+        "url": "https://www.raywhite.co.nz"
+      },
+      "knowsAbout": ["Luxury Real Estate", "Property Sales", "Property Appraisals", "Auckland Real Estate Market"],
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": 2
+      }
+    }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -49,6 +126,7 @@
                 <li class="has-dropdown">
                     <a href="#about" class="nav-link">Why Choose Sharon <svg viewBox="0 0 10 6" width="10" height="6"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></a>
                 </li>
+                <li><a href="#services" class="nav-link">Services</a></li>
                 <li><a href="#testimonials" class="nav-link">Customer Care</a></li>
                 <li><a href="#contact" class="nav-link">Get In Touch</a></li>
             </ul>
@@ -59,7 +137,7 @@
     </nav>
 
     <!-- ====== HERO SECTION ====== -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" aria-label="Hero image slideshow">
         <div class="hero-slider" id="heroSlider">
             <!-- Slide 1 — Luxury modern home at dusk -->
             <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80&auto=format&fit=crop');">
@@ -119,7 +197,7 @@
     </section>
 
     <!-- ====== STATS BAR ====== -->
-    <section class="stats-bar">
+    <section class="stats-bar" aria-label="Sales statistics">
         <div class="container stats-bar-inner">
             <div class="stat-item">
                 <span class="stat-number" data-target="350">0</span><span class="stat-suffix">+</span>
@@ -141,7 +219,7 @@
     </section>
 
     <!-- ====== FOR SALE — PROPERTY CAROUSEL ====== -->
-    <section class="listings" id="listings">
+    <section class="listings" id="listings" aria-label="Properties for sale">
         <div class="container">
             <div class="section-header">
                 <div>
@@ -163,7 +241,7 @@
 
                     <!-- Listing 1 — Waterfront -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="42 Marine Parade, Takapuna">
                             <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop" alt="Coastal Haven Estate, Takapuna" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -186,7 +264,7 @@
 
                     <!-- Listing 2 — Lifestyle -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="18 Vineyard Lane, Waiheke Island">
                             <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format&fit=crop" alt="Vineyard Lane, Waiheke Island" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -209,7 +287,7 @@
 
                     <!-- Listing 3 — Urban penthouse -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="Level 32, Viaduct Tower">
                             <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&auto=format&fit=crop" alt="Viaduct Tower Penthouse" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -232,7 +310,7 @@
 
                     <!-- Listing 4 — Beachfront -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="8 Tamaki Drive, Mission Bay">
                             <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format&fit=crop" alt="Mission Bay property" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -255,7 +333,7 @@
 
                     <!-- Listing 5 — Country estate -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="156 Old North Road, Kumeu">
                             <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&auto=format&fit=crop" alt="Kumeu Country Manor" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -278,7 +356,7 @@
 
                     <!-- Listing 6 — Wine estate -->
                     <div class="listing-card">
-                        <div class="listing-image">
+                        <div class="listing-image" data-lightbox-src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=1920&q=90&auto=format&fit=crop" data-lightbox-caption="25 Matakana Valley Road">
                             <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&auto=format&fit=crop" alt="Matakana Valley property" loading="lazy">
                             <span class="listing-badge">For Sale</span>
                             <button class="listing-save" aria-label="Save">♡</button>
@@ -308,7 +386,7 @@
     </section>
 
     <!-- ====== SOLD SECTION ====== -->
-    <section class="sold-section" id="sold">
+    <section class="sold-section" id="sold" aria-label="Recently sold properties">
         <div class="container">
             <div class="section-header">
                 <div>
@@ -365,7 +443,7 @@
     </section>
 
     <!-- ====== WHY CHOOSE SHARON ====== -->
-    <section class="about" id="about">
+    <section class="about" id="about" aria-label="About Sharon Maxwell and Kirk">
         <div class="container">
             <div class="about-grid">
                 <div class="about-image">
@@ -413,8 +491,146 @@
         </div>
     </section>
 
+    <!-- ====== OUR SERVICES — SLIDE SYSTEM ====== -->
+    <section class="services-showcase" id="services" aria-label="Our services and fees">
+        <div class="container">
+            <div class="section-header" style="text-align: center; display: block;">
+                <h2 class="section-title" style="text-align: center;">Our Premium Services</h2>
+                <p class="section-subtitle" style="text-align: center; max-width: 600px; margin: 0 auto;">Tailored marketing packages designed to achieve the best possible result for your property</p>
+            </div>
+        </div>
+
+        <div class="services-slider" id="servicesSlider">
+            <div class="services-track" id="servicesTrack">
+                <!-- Slide 1 — Signature Package -->
+                <div class="service-slide">
+                    <div class="service-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1920&q=80&auto=format&fit=crop');"></div>
+                    <div class="service-slide-overlay"></div>
+                    <div class="service-slide-content">
+                        <div class="service-badge">Most Popular</div>
+                        <h3>The Signature Package</h3>
+                        <p class="service-description">Our comprehensive marketing campaign designed for premium properties. Everything you need to achieve an outstanding result.</p>
+                        <ul class="service-features-list">
+                            <li>Professional photography &amp; drone footage</li>
+                            <li>Cinematic property video tour</li>
+                            <li>Premium TradeMe &amp; realestate.co.nz listings</li>
+                            <li>Ray White national network exposure</li>
+                            <li>Targeted social media campaign</li>
+                            <li>Professional staging consultation</li>
+                            <li>Open home management</li>
+                            <li>Weekly vendor reporting</li>
+                        </ul>
+                        <div class="service-price-tag">
+                            <span class="service-price-label">Commission from</span>
+                            <span class="service-price-amount">2.95%</span>
+                            <span class="service-price-note">+ GST on sale price</span>
+                        </div>
+                        <a href="#contact" class="btn btn-yellow btn-lg">Enquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Slide 2 — Prestige Package -->
+                <div class="service-slide">
+                    <div class="service-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&q=80&auto=format&fit=crop');"></div>
+                    <div class="service-slide-overlay"></div>
+                    <div class="service-slide-content">
+                        <div class="service-badge gold">Luxury Tier</div>
+                        <h3>The Prestige Package</h3>
+                        <p class="service-description">For discerning vendors who demand the very best. An elevated marketing experience for Auckland's finest properties.</p>
+                        <ul class="service-features-list">
+                            <li>Everything in Signature, plus:</li>
+                            <li>Full professional home staging</li>
+                            <li>Magazine-quality print brochure</li>
+                            <li>Luxury property magazine feature</li>
+                            <li>International buyer network access</li>
+                            <li>Bespoke marketing strategy</li>
+                            <li>VIP buyer database targeting</li>
+                            <li>Dedicated concierge service</li>
+                        </ul>
+                        <div class="service-price-tag">
+                            <span class="service-price-label">Commission from</span>
+                            <span class="service-price-amount">3.50%</span>
+                            <span class="service-price-note">+ GST on sale price</span>
+                        </div>
+                        <a href="#contact" class="btn btn-yellow btn-lg">Enquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Slide 3 — Auction Campaign -->
+                <div class="service-slide">
+                    <div class="service-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1920&q=80&auto=format&fit=crop');"></div>
+                    <div class="service-slide-overlay"></div>
+                    <div class="service-slide-content">
+                        <div class="service-badge">Best Results</div>
+                        <h3>Auction Campaign</h3>
+                        <p class="service-description">Our proven auction process creates competition and urgency, consistently delivering record-breaking results.</p>
+                        <ul class="service-features-list">
+                            <li>Full Signature Package marketing</li>
+                            <li>4-week structured auction campaign</li>
+                            <li>Professional auctioneer</li>
+                            <li>Multi-offer management</li>
+                            <li>Pre-auction buyer qualification</li>
+                            <li>Legal pack preparation assistance</li>
+                            <li>Post-auction negotiation</li>
+                            <li>Vendor advocacy throughout</li>
+                        </ul>
+                        <div class="service-price-tag">
+                            <span class="service-price-label">Commission from</span>
+                            <span class="service-price-amount">2.95%</span>
+                            <span class="service-price-note">+ GST · marketing costs apply</span>
+                        </div>
+                        <a href="#contact" class="btn btn-yellow btn-lg">Enquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Slide 4 — Buyer Representation -->
+                <div class="service-slide">
+                    <div class="service-slide-bg" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&auto=format&fit=crop');"></div>
+                    <div class="service-slide-overlay"></div>
+                    <div class="service-slide-content">
+                        <div class="service-badge">For Buyers</div>
+                        <h3>Buyer Representation</h3>
+                        <p class="service-description">Let us find your dream home. Our buyer representation service gives you access to off-market opportunities and expert negotiation.</p>
+                        <ul class="service-features-list">
+                            <li>Personalised property search</li>
+                            <li>Off-market &amp; pre-market access</li>
+                            <li>Property due diligence support</li>
+                            <li>Auction bidding strategy</li>
+                            <li>Negotiation on your behalf</li>
+                            <li>Market analysis &amp; valuation insight</li>
+                            <li>Settlement support</li>
+                            <li>Ongoing market updates</li>
+                        </ul>
+                        <div class="service-price-tag">
+                            <span class="service-price-label">Fee</span>
+                            <span class="service-price-amount">Free</span>
+                            <span class="service-price-note">for registered buyers</span>
+                        </div>
+                        <a href="#contact" class="btn btn-yellow btn-lg">Register Interest</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services slider controls -->
+            <div class="services-controls">
+                <button class="services-arrow services-prev" id="servicesPrev" aria-label="Previous service">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <div class="services-dots" id="servicesDots"></div>
+                <button class="services-arrow services-next" id="servicesNext" aria-label="Next service">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+            </div>
+
+            <!-- Services progress bar -->
+            <div class="services-progress">
+                <div class="services-progress-bar" id="servicesProgress"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- ====== APPRAISAL CTA ====== -->
-    <section class="appraisal-cta" id="appraisal">
+    <section class="appraisal-cta" id="appraisal" aria-label="Free property appraisal">
         <div class="appraisal-bg" style="background-image: url('https://images.unsplash.com/photo-1600607687644-c7171b42498f?w=1920&q=80&auto=format&fit=crop');"></div>
         <div class="appraisal-overlay"></div>
         <div class="container appraisal-inner">
@@ -427,7 +643,7 @@
     </section>
 
     <!-- ====== TESTIMONIALS ====== -->
-    <section class="testimonials" id="testimonials">
+    <section class="testimonials" id="testimonials" aria-label="Client testimonials">
         <div class="container">
             <div class="section-header">
                 <div>
@@ -474,7 +690,7 @@
     </section>
 
     <!-- ====== CONTACT ====== -->
-    <section class="contact" id="contact">
+    <section class="contact" id="contact" aria-label="Contact Sharon Maxwell and Kirk">
         <div class="container">
             <div class="contact-grid">
                 <div class="contact-info">
@@ -514,20 +730,20 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" required>
+                            <input type="text" id="firstName" name="firstName" required maxlength="100">
                         </div>
                         <div class="form-group">
                             <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" required>
+                            <input type="text" id="lastName" name="lastName" required maxlength="100">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required maxlength="254">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone">
+                        <input type="tel" id="phone" name="phone" maxlength="20" pattern="[0-9+\-\s()]*">
                     </div>
                     <div class="form-group">
                         <label for="interest">I'm Interested In</label>
@@ -542,7 +758,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" name="message" rows="4"></textarea>
+                        <textarea id="message" name="message" rows="4" maxlength="2000"></textarea>
                     </div>
                     <button type="submit" class="btn btn-yellow btn-full">Send Enquiry</button>
                 </form>
@@ -575,6 +791,7 @@
                         <li><a href="#listings">For Sale</a></li>
                         <li><a href="#sold">Sold</a></li>
                         <li><a href="#about">Why Choose Sharon</a></li>
+                        <li><a href="#services">Services & Fees</a></li>
                         <li><a href="#testimonials">Customer Care</a></li>
                         <li><a href="#contact">Get In Touch</a></li>
                     </ul>
