@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initContactForm();
     initLightbox();
     initParallax();
+    initServicesSlider();
 });
 
 /* ============ NAVIGATION ============ */
@@ -327,7 +328,7 @@ function initFavourites() {
 /* ============ SCROLL REVEAL with stagger ============ */
 function initScrollReveal() {
     const elements = document.querySelectorAll(
-        '.listing-card, .sold-card, .testimonial-card, .about-grid, .contact-grid, .section-header, .stat-item, .highlight, .appraisal-inner'
+        '.listing-card, .sold-card, .testimonial-card, .about-grid, .contact-grid, .section-header, .stat-item, .highlight, .appraisal-inner, .service-slide-content'
     );
 
     const observer = new IntersectionObserver((entries) => {
@@ -336,7 +337,7 @@ function initScrollReveal() {
                 // Stagger animation
                 setTimeout(() => {
                     entry.target.classList.add('visible');
-                }, i * 80);
+                }, i * 100);
                 observer.unobserve(entry.target);
             }
         });
@@ -477,4 +478,87 @@ function initParallax() {
             ticking = true;
         }
     }, { passive: true });
+}
+
+/* ============ SERVICES SHOWCASE SLIDER ============ */
+function initServicesSlider() {
+    const track = document.getElementById('servicesTrack');
+    const dotsContainer = document.getElementById('servicesDots');
+    const prevBtn = document.getElementById('servicesPrev');
+    const nextBtn = document.getElementById('servicesNext');
+    const progressBar = document.getElementById('servicesProgress');
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.service-slide');
+    let current = 0;
+    let interval;
+    const SLIDE_DURATION = 8000;
+
+    // Create dots
+    slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'services-dot' + (i === 0 ? ' active' : '');
+        dot.dataset.slide = i;
+        dot.setAttribute('aria-label', 'Go to service ' + (i + 1));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = dotsContainer.querySelectorAll('.services-dot');
+
+    // Set first slide active
+    slides[0].classList.add('active');
+
+    function goTo(idx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = (idx + slides.length) % slides.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+        resetProgress();
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function resetProgress() {
+        if (!progressBar) return;
+        progressBar.classList.remove('animate');
+        progressBar.style.width = '0%';
+        void progressBar.offsetWidth;
+        progressBar.classList.add('animate');
+    }
+
+    function startAuto() {
+        resetProgress();
+        interval = setInterval(next, SLIDE_DURATION);
+    }
+
+    function resetAuto() {
+        clearInterval(interval);
+        startAuto();
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAuto(); });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            goTo(parseInt(dot.dataset.slide));
+            resetAuto();
+        });
+    });
+
+    // Touch support
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) {
+            diff > 0 ? next() : prev();
+            resetAuto();
+        }
+    }, { passive: true });
+
+    startAuto();
 }
